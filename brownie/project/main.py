@@ -34,6 +34,7 @@ from brownie._config import (
 )
 from brownie._expansion import expand_posix_vars
 from brownie.exceptions import (
+    BadProjectName,
     BrownieEnvironmentWarning,
     InvalidPackage,
     PragmaError,
@@ -58,6 +59,7 @@ BUILD_FOLDERS = ["contracts", "deployments", "interfaces"]
 MIXES_URL = "https://github.com/brownie-mix/{}-mix/archive/{}.zip"
 
 GITIGNORE = """__pycache__
+.env
 .history
 .hypothesis/
 build/
@@ -315,6 +317,7 @@ class Project(_ProjectBase):
         changed_sources = {i: self._sources.get(i) for i in changed_paths}
         abi_json = compiler.get_abi(
             changed_sources,
+            solc_version=self._compiler_config["solc"].get("version", None),
             allow_paths=self._path.as_posix(),
             remappings=self._compiler_config["solc"].get("remappings", []),
         )
@@ -733,7 +736,9 @@ def load(project_path: Union[Path, str, None] = None, name: Optional[str] = None
         name = project_path.name
         if not name.lower().endswith("project"):
             name += " project"
-        name = "".join(i for i in name.title() if i.isalpha())
+        if not name[0].isalpha():
+            raise BadProjectName("Project must start with an alphabetic character")
+        name = "".join(i for i in name.title() if i.isalnum())
     if next((True for i in _loaded_projects if i._name == name), False):
         raise ProjectAlreadyLoaded("There is already a project loaded with this name")
 
