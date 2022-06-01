@@ -220,6 +220,9 @@ class ContractContainer(_ContractBase):
             if (i.tx and i.tx.block_number is not None and i.tx.block_number > height)
             or len(web3.eth.get_code(i.address).hex()) <= 4
         ]
+
+        print("reverted contracts:", reverted)
+
         for contract in reverted:
             self.remove(contract)
             contract._reverted = True
