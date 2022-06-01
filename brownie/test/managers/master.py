@@ -3,7 +3,7 @@
 import json
 
 import pytest
-from xdist.scheduler import LoadFileScheduling
+from xdist.scheduler import LoadSchedule
 
 from brownie._config import CONFIG
 from brownie.test import coverage
@@ -34,7 +34,9 @@ class PytestBrownieMaster(PytestBrownieBase):
         Uses file scheduling to ensure consistent test execution with module-level
         isolation.
         """
-        return LoadFileScheduling(config, log)
+        # TODO: check if we have module_isolation and only use LoadFileScheduling
+        # return LoadFileScheduling(config, log)
+        return LoadSchedule(config, log)
 
     def pytest_xdist_node_collection_finished(self, ids):
         """

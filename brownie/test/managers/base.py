@@ -84,8 +84,9 @@ class PytestBrownieBase:
         return self.project_path.joinpath(path).relative_to(self.project_path).as_posix()
 
     def _test_id(self, nodeid):
+        # TODO: this gives us module level isolation, but we don't want that right now
         path, test_id = nodeid.split("::", maxsplit=1)
-        return self._path(path), test_id
+        return self._path(path) + "::" + test_id, test_id
 
     def _get_hash(self, path):
         hash_ = _get_ast_hash(self.project_path.joinpath(path))
