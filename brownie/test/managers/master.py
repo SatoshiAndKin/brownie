@@ -3,7 +3,7 @@
 import json
 
 import pytest
-from xdist.scheduler import LoadSchedule
+from xdist.scheduler import LoadScheduling
 
 from brownie._config import CONFIG
 from brownie.test import coverage
@@ -36,7 +36,7 @@ class PytestBrownieMaster(PytestBrownieBase):
         """
         # TODO: check if we have module_isolation and only use LoadFileScheduling
         # return LoadFileScheduling(config, log)
-        return LoadSchedule(config, log)
+        return LoadScheduling(config, log)
 
     def pytest_xdist_node_collection_finished(self, ids):
         """
