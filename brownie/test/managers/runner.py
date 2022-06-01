@@ -222,7 +222,7 @@ class PytestBrownieRunner(PytestBrownieBase):
                 tests[path][0].parent.add_marker("skip")
                 self.isolated[path] = set(self.tests[path]["isolated"])
 
-            raise NotImplementedError("isolated:", self.isolated)
+        raise NotImplementedError("isolated:", self.isolated)
 
     def _check_updated(self, path):
         path = self._path(path)
