@@ -786,7 +786,7 @@ class _DeployedContractBase(_ContractBase):
         return super().__eq__(other)
 
     def __getattribute__(self, name: str) -> Any:
-        if super().__getattribute__("_reverted"):
+        if super().__getattribute__("_reverted") and name != "address":
             warnings.warn(f"This contract no longer exists at {self.address} (checking {name})")
 
         try:
