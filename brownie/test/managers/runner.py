@@ -203,8 +203,6 @@ class PytestBrownieRunner(PytestBrownieBase):
                     i.add_marker("skip")
 
             # determine which modules are isolated
-            # TODO: rewrite this to allow fn_isolation by itself
-            """
             path = self._path(i.parent.fspath)
             # TODO: i think this will nede to change
             if "module_isolation" not in i.fixturenames:
@@ -213,7 +211,6 @@ class PytestBrownieRunner(PytestBrownieBase):
             if path in tests and tests[path] is None:
                 continue
             tests.setdefault(path, []).append(i)
-            """
 
         isolated_tests = sorted(k for k, v in tests.items() if v)
         self.isolated = dict((self._path(i), set()) for i in isolated_tests)
@@ -224,6 +221,8 @@ class PytestBrownieRunner(PytestBrownieBase):
             for path in isolated_tests:
                 tests[path][0].parent.add_marker("skip")
                 self.isolated[path] = set(self.tests[path]["isolated"])
+
+            print("isolated:", self.isolated)
 
     def _check_updated(self, path):
         path = self._path(path)
