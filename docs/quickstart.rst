@@ -344,7 +344,7 @@ This example uses isolation and a shared setup fixture. Because the ``token`` fi
     from brownie import accounts
 
 
-    @pytest.fixture(scope="module")
+    @pytest.fixture(scope="session")
     def token(Token):
         yield Token.deploy("Test Token", "TST", 18, 1e20, {'from': accounts[0]})
 

@@ -34,10 +34,16 @@ class PytestBrownieFixtures:
         a clean environment for the module, and that it's results will not affect
         subsequent tests.
         """
+        print("Resetting the chain for module isolation")
         brownie.chain.reset()
+
         yield
+
         if not CONFIG.argv["interrupt"]:
+            print("Resetting the chain for module isolation")
             brownie.chain.reset()
+        else:
+            print("Not resetting the chain for module isolation")
 
     @pytest.fixture
     def fn_isolation(self, module_isolation):
@@ -47,10 +53,14 @@ class PytestBrownieFixtures:
 
         Used to ensure that each test in a module begins with an identical environment.
         """
+        print("snapshotting for fn_isolation")
         snapshot_id = brownie.chain.snapshot()
         yield
         if not CONFIG.argv["interrupt"]:
+            print("reverting for fn_isolation")
             brownie.chain.revert(snapshot_id)
+        else:
+            print("Not reverting for fn_isolation")
 
     @pytest.fixture(scope="session")
     def accounts(self):
