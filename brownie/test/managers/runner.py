@@ -204,6 +204,7 @@ class PytestBrownieRunner(PytestBrownieBase):
 
             # determine which modules are isolated
             path = self._path(i.parent.fspath)
+            # TODO: i think this will nede to change
             if "module_isolation" not in i.fixturenames:
                 tests[path] = None
                 continue
@@ -553,9 +554,9 @@ class PytestBrownieXdistRunner(PytestBrownieRunner):
         items : List[_pytest.nodes.Item]
             List of item objects representing the collected tests
         """
-        if next((i for i in items if "module_isolation" not in i.fixturenames), False):
-            items.clear()
-            return True
+        # if next((i for i in items if "module_isolation" not in i.fixturenames), False):
+        #     items.clear()
+        #     return True
 
         super().pytest_collection_modifyitems(items)
 
