@@ -5,4 +5,9 @@ services:
       context: .
     volumes:
       - .:/code
+      # TODO: this works for me, but not everyone will want this
+      - $HOME/.brownie/network-config.yaml:/root/.brownie/network-config.yaml
     command: tail -f /dev/null
+    # TODO: load this from an environment variable so M1 macs can easily use this
+    platform: linux/x86_64
+
