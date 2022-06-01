@@ -786,8 +786,9 @@ class _DeployedContractBase(_ContractBase):
         return super().__eq__(other)
 
     def __getattribute__(self, name: str) -> Any:
-        if super().__getattribute__("_reverted") and name not in ["address", "_delete_deployment"]:
-            raise ContractNotFound(f"This contract no longer exists at {self.address}")
+        if super().__getattribute__("_reverted"):
+            warnings.warn(f"This contract no longer exists at {self.address} (checking {name})")
+
         try:
             return super().__getattribute__(name)
         except AttributeError:
