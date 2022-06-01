@@ -553,14 +553,7 @@ class PytestBrownieXdistRunner(PytestBrownieRunner):
         items : List[_pytest.nodes.Item]
             List of item objects representing the collected tests
         """
-        if next(
-            (
-                i
-                for i in items
-                if not ("module_isolation" in i.fixturenames or "fn_isolation" in i.fixturesnames)
-            ),
-            False,
-        ):
+        if next((i for i in items if "module_isolation" not in i.fixturenames), False):
             items.clear()
             return True
 
