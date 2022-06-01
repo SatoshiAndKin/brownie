@@ -47,10 +47,10 @@ class PytestBrownieFixtures:
 
         Used to ensure that each test in a module begins with an identical environment.
         """
-        brownie.chain.snapshot()
+        snapshot_id = brownie.chain.snapshot()
         yield
         if not CONFIG.argv["interrupt"]:
-            brownie.chain.revert()
+            brownie.chain.revert(snapshot_id)
 
     @pytest.fixture(scope="session")
     def accounts(self):

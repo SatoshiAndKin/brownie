@@ -427,7 +427,7 @@ class Chain(metaclass=_Singleton):
         self._current_id = rpc.Rpc().snapshot()
         return web3.eth.block_number
 
-    def snapshot(self) -> None:
+    def snapshot(self) -> int:
         """
         Take a snapshot of the current state of the EVM.
 
@@ -437,7 +437,9 @@ class Chain(metaclass=_Singleton):
         self._redo_buffer.clear()
         self._snapshot_id = self._current_id = rpc.Rpc().snapshot()
 
-    def revert(self) -> int:
+        return self._snapshot_id
+
+    def revert(self, snapshot_id=None) -> int:
         """
         Revert the EVM to the most recently taken snapshot.
 
@@ -452,7 +454,7 @@ class Chain(metaclass=_Singleton):
             raise ValueError("No snapshot set")
         self._undo_buffer.clear()
         self._redo_buffer.clear()
-        self._snapshot_id = self._current_id = self._revert(self._snapshot_id)
+        self._snapshot_id = self._current_id = self._revert(snapshot_id or self._snapshot_id)
         return web3.eth.block_number
 
     def reset(self) -> int:
