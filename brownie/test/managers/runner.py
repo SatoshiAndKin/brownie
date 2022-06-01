@@ -52,7 +52,7 @@ class RevertContextManager:
         self, revert_msg=None, dev_revert_msg=None, revert_pattern=None, dev_revert_pattern=None
     ):
         if revert_msg is not None and revert_pattern is not None:
-            raise ValueError("Can only use one of`revert_msg` and `revert_pattern`")
+            raise ValueError("Can only use one of `revert_msg` and `revert_pattern`")
         if dev_revert_msg is not None and dev_revert_pattern is not None:
             raise ValueError("Can only use one of `dev_revert_msg` and `dev_revert_pattern`")
 
@@ -221,6 +221,9 @@ class PytestBrownieRunner(PytestBrownieBase):
             for path in isolated_tests:
                 tests[path][0].parent.add_marker("skip")
                 self.isolated[path] = set(self.tests[path]["isolated"])
+
+        print("node_map:", self.node_map)
+        print("tests:", tests)
 
     def _check_updated(self, path):
         path = self._path(path)
