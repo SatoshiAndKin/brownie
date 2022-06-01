@@ -561,9 +561,8 @@ class PytestBrownieXdistRunner(PytestBrownieRunner):
             ),
             False,
         ):
-            warnings.warn("missing module_isolation or fn_isolation!")
-            # items.clear()
-            # return True
+            items.clear()
+            return True
 
         super().pytest_collection_modifyitems(items)
 
