@@ -40,6 +40,8 @@ def connect(network: str = None, launch_rpc: bool = True) -> None:
         web3.connect(host, active.get("timeout", 30))
         if CONFIG.network_type == "development" and launch_rpc and not rpc.is_active():
             if is_connected():
+                # TODO: flag to allow/deny this behavior. i think we should pick an open port instead
+                # TODO: some clients allow binding to port 0. this is the proper way to get a port but we will need to inspect the process
                 if web3.eth.block_number != 0:
                     warnings.warn(
                         f"Development network has a block height of {web3.eth.block_number}",
@@ -69,7 +71,7 @@ def disconnect(kill_rpc: bool = True) -> None:
         if rpc.is_child():
             rpc.kill()
     web3.disconnect()
-    _notify_registry(0)
+    chain._network_disconnected()
 
 
 def show_active() -> Optional[str]:
