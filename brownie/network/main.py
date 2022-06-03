@@ -65,7 +65,7 @@ def connect(network: str = None, launch_rpc: bool = True) -> None:
 def disconnect(kill_rpc: bool = True) -> None:
     """Disconnects from the network."""
     if not is_connected():
-        raise ConnectionError("Not connected to any network")
+        warnings.warn("Not connected to any network")
     CONFIG.clear_active()
     if kill_rpc and rpc.is_active():
         if rpc.is_child():
