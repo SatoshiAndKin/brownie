@@ -12,9 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Deepcopy config so that disconnecting and reconnecting to networks works fully ([#1466](https://github.com/eth-brownie/brownie/pull/1466))
-
-### Fixed
 - Handle null value of `to` field in transaction receipt so that contract deploying with Anvil works properly ([#1573](https://github.com/eth-brownie/brownie/pull/1573))
+- Avoid removing dependencies from the build ([#1564](https://github.com/eth-brownie/brownie/pull/1564))
 
 ## [1.19.0](https://github.com/eth-brownie/brownie/tree/v1.19.0) - 2022-05-29
 
@@ -42,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ensure `.env` file exists on installed packages ([#1504](https://github.com/eth-brownie/brownie/pull/1504))
 - Bug when highlighting source code in GUI ([#1512](https://github.com/eth-brownie/brownie/pull/1512))
 - Bug when highlighting opcodes in GUI ([#1513](https://github.com/eth-brownie/brownie/pull/1513))
->>>>>>> upstream/anvil
 
 ## [1.18.1](https://github.com/eth-brownie/brownie/tree/v1.18.1) - 2022-02-15
 ### Fixed
