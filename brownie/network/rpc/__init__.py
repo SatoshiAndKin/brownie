@@ -27,6 +27,7 @@ LAUNCH_BACKENDS = {
     "ganache": ganache,
     "ethnode": geth,
     "geth": geth,
+    "hardhat": hardhat,
     "npx hardhat": hardhat,
 }
 
