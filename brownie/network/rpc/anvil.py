@@ -12,6 +12,7 @@ from brownie.exceptions import InvalidArgumentWarning, RPCRequestError
 from brownie.network.web3 import web3
 
 CLI_FLAGS = {
+    "block_base_fee_per_gas": "--block-base-fee-per-gas",
     "port": "--port",
     "host": "--host",
     "fork": "--fork-url",
@@ -19,6 +20,7 @@ CLI_FLAGS = {
     "chain_id": "--chain-id",
     "default_balance": "--balance",
     "gas_limit": "--gas-limit",
+    "gas_price": "--gas-price",
 }
 
 
