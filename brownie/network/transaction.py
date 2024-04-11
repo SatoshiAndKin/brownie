@@ -45,7 +45,7 @@ def clean_int(value):
         return value
 
     if isinstance(value, str):
-        return int.from_bytes(HexBytes(value, "big", signed=True))
+        return int.from_bytes(HexBytes(value), "big", signed=True)
 
     raise ValueError("Input must be an int or string")
 
