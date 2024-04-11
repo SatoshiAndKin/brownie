@@ -36,6 +36,20 @@ from .web3 import web3
 _marker = deque("-/|\\-/|\\")
 
 
+def clean_int(value):
+    """
+    ints are returned unchanged.
+    strings are treated as hex even without a prefix.
+    """
+    if isinstance(value, int):
+        return value
+
+    if isinstance(value, str):
+        return int.from_bytes(HexBytes(value, "big", signed=True))
+
+    raise ValueError("Input must be an int or string")
+
+
 def trace_property(fn: Callable) -> Any:
     # attributes that are only available after querying the tranasaction trace
 
@@ -82,7 +96,6 @@ class Status(IntEnum):
 
 
 class TransactionReceipt:
-
     """Attributes and methods relating to a broadcasted transaction.
 
     * All ether values are given as integers denominated in wei.
@@ -574,11 +587,11 @@ class TransactionReceipt:
         """Sets object attributes based on the transaction reciept."""
         self.block_number = receipt["blockNumber"]
         self.txindex = receipt["transactionIndex"]
-        self.gas_used = receipt["gasUsed"]
+        self.gas_used = clean_int(receipt["gasUsed"])
         self.logs = receipt["logs"]
         self.status = Status(receipt["status"])
         if "effectiveGasPrice" in receipt:
-            self.gas_price = receipt["effectiveGasPrice"]
+            self.gas_price = clean_int(receipt["effectiveGasPrice"])
 
         self.contract_address = receipt["contractAddress"]
         if self.contract_address and not self.contract_name:
@@ -591,7 +604,9 @@ class TransactionReceipt:
         self.coverage_hash = sha1(base.encode()).hexdigest()
 
         if self.fn_name:
-            state.TxHistory()._gas(self._full_name(), receipt["gasUsed"], self.status == Status(1))
+            state.TxHistory()._gas(
+                self._full_name(), clean_int(receipt["gasUsed"]), self.status == Status(1)
+            )
 
     def _confirm_output(self) -> str:
         status = ""
@@ -673,9 +688,9 @@ class TransactionReceipt:
                     step["stack"] = [HexBytes(s).hex()[2:].zfill(64) for s in step["stack"]]
                 if fix_gas:
                     # handle traces where numeric values are returned as hex (Nethermind)
-                    step["gas"] = int(step["gas"], 16)
-                    step["gasCost"] = int.from_bytes(HexBytes(step["gasCost"]), "big", signed=True)
-                    step["pc"] = int(step["pc"], 16)
+                    step["gas"] = clean_int(step["gas"])
+                    step["gasCost"] = clean_int(step["gasCost"])
+                    step["pc"] = clean_int(step["pc"])
 
         if self.status:
             self._confirmed_trace(trace)
@@ -833,20 +848,24 @@ class TransactionReceipt:
 
         if trace[0]["depth"] == 1:
             self._trace_origin = "geth"
-            self._call_cost = self.gas_used - trace[0]["gas"] + trace[-1]["gas"]
+            self._call_cost = (
+                self.gas_used - clean_int(trace[0]["gas"]) + clean_int(trace[-1]["gas"])
+            )
             for t in trace:
                 t["depth"] = t["depth"] - 1
         else:
             self._trace_origin = "ganache"
-            if trace[0]["gasCost"] >= 21000:
+            if clean_int(trace[0]["gasCost"]) >= 21000:
                 # in ganache <6.10.0, gas costs are shifted by one step - we can
                 # identify this when the first step has a gas cost >= 21000
-                self._call_cost = trace[0]["gasCost"]
+                self._call_cost = clean_int(trace[0]["gasCost"])
                 for i in range(len(trace) - 1):
-                    trace[i]["gasCost"] = trace[i + 1]["gasCost"]
+                    trace[i]["gasCost"] = clean_int(trace[i + 1]["gasCost"])
                 trace[-1]["gasCost"] = 0
             else:
-                self._call_cost = self.gas_used - trace[0]["gas"] + trace[-1]["gas"]
+                self._call_cost = (
+                    self.gas_used - clean_int(trace[0]["gas"]) + clean_int(trace[-1]["gas"])
+                )
 
         # last_map gives a quick reference of previous values at each depth
         last_map = {0: _get_last_map(self.receiver, self.input[:10], False)}  # type: ignore
@@ -1074,14 +1093,14 @@ class TransactionReceipt:
             if is_internal and not _step_compare(trace[i], trace[start]):
                 is_internal = False
                 # For the internal gas tracking we ignore the gas passed to an external call
-                if trace[i]["depth"] > trace[start]["depth"]:
+                if clean_int(trace[i]["depth"]) > clean_int(trace[start]["depth"]):
                     internal_gas -= trace[i - 1]["gasCost"]
             elif not is_internal and _step_compare(trace[i], trace[start]):
                 is_internal = True
 
-            total_gas += trace[i]["gasCost"]
+            total_gas += clean_int(trace[i]["gasCost"])
             if is_internal:
-                internal_gas += trace[i]["gasCost"]
+                internal_gas += clean_int(trace[i]["gasCost"])
 
             # manually add gas refunds where they occur
             if trace[i]["op"] == "SSTORE" and int(trace[i]["stack"][-2], 16) == 0:
@@ -1098,9 +1117,9 @@ class TransactionReceipt:
                     internal_gas -= 24000
 
         # For external calls, add the remaining gas returned back
-        if start > 0 and trace[start]["depth"] > trace[start - 1]["depth"]:
-            total_gas += trace[start - 1]["gasCost"]
-            internal_gas += trace[start - 1]["gasCost"]
+        if start > 0 and clean_int(trace[start]["depth"]) > clean_int(trace[start - 1]["depth"]):
+            total_gas += clean_int(trace[start - 1]["gasCost"])
+            internal_gas += clean_int(trace[start - 1]["gasCost"])
 
         return internal_gas, total_gas
 
