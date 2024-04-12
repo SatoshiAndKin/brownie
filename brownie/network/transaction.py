@@ -36,7 +36,7 @@ from .web3 import web3
 _marker = deque("-/|\\-/|\\")
 
 
-def clean_int(value):
+def clean_int(value, always_hex=False):
     """
     ints are returned unchanged.
     strings are treated as hex even without a prefix.
@@ -45,7 +45,11 @@ def clean_int(value):
         return value
 
     if isinstance(value, str):
-        return int.from_bytes(HexBytes(value), "big", signed=True)
+        # TODO: i think this is wrong. this handled a string not prefixed with 0x has hex. but i think sometimes we have base10 strings. how to tell?! why did they do that to us?!
+        if always_hex or value.startswith("0x"):
+            return int.from_bytes(HexBytes(value), "big", signed=True)
+
+        return int(value, 10)
 
     raise ValueError("Input must be an int or string")
 
@@ -689,7 +693,7 @@ class TransactionReceipt:
                 if fix_gas:
                     # handle traces where numeric values are returned as hex (Nethermind)
                     step["gas"] = clean_int(step["gas"])
-                    step["gasCost"] = clean_int(step["gasCost"])
+                    step["gasCost"] = clean_int(step["gasCost"], always_hex=True)
                     step["pc"] = clean_int(step["pc"])
 
         if self.status:
