@@ -5,7 +5,7 @@ import copy
 import pytest
 import yaml
 
-from brownie._config import _get_data_folder, _load_config
+from brownie._config import _get_data_folder, _load_config, _load_project_config, _recursive_update
 from brownie.network import web3
 from brownie.network.rpc.ganache import _validate_cmd_settings
 
@@ -49,29 +49,19 @@ def project_settings(testproject):
 
 def test_load_project_cmd_settings(config, testproject, project_settings):
     """Tests if project specific cmd_settings update the network config when a project is loaded"""
-    # get raw cmd_setting config data from the network-config.yaml file
-    config_path_network = _get_data_folder().joinpath("network-config.yaml")
-    cmd_settings_network_raw = _load_config(config_path_network)["development"][0]["cmd_settings"]
-
-    # compare the manually loaded network cmd_settings to the cmd_settings in the CONFIG singleton
-    cmd_settings_config = config.networks["development"]["cmd_settings"]
-    for k, v in cmd_settings_config.items():
-        if k != "port":
-            try:
-                assert cmd_settings_network_raw[k] == v
-            except KeyError as e:
-                raise KeyError(*e.args, cmd_settings_network_raw) from e
+    # The project fixture has already loaded its own settings. Preserve unspecified fields.
+    before = {
+        name: copy.deepcopy(config.networks[name]["cmd_settings"])
+        for name in ("development", "ganache-cli", "hardhat")
+    }
 
     # Load the project with its project specific settings and assert that the CONFIG was updated
     testproject.load_config()
     for network in ("development", "ganache-cli", "hardhat"):
-        cmd_settings_config = config.networks[network]["cmd_settings"]
-        for k, v in project_settings["cmd_settings"].items():
-            if k != "port":
-                try:
-                    assert cmd_settings_config[k] == v
-                except KeyError as e:
-                    raise KeyError(*e.args, cmd_settings_config) from e
+        assert config.networks[network]["cmd_settings"] == {
+            **before[network],
+            **project_settings["cmd_settings"],
+        }
 
 
 def test_project_cmd_settings_backend_overrides(config, testproject):
@@ -86,6 +76,42 @@ def test_project_cmd_settings_backend_overrides(config, testproject):
     generic_cmd_settings = BASE_PROJECT_CONFIG["networks"]["development"]["cmd_settings"]
     assert cmd_settings["accounts"] == 4
     assert cmd_settings["chain_id"] == generic_cmd_settings["chain_id"]
+
+
+@pytest.mark.parametrize("default", ["mainnet", "development"])
+def test_project_network_default_string(config, tmp_path, default):
+    """A scalar default must not acquire the type of a network settings dictionary."""
+    tmp_path.joinpath("brownie-config.yaml").write_text(
+        yaml.safe_dump({"networks": {"default": default}})
+    )
+
+    _load_project_config(tmp_path)
+
+    assert config.settings["networks"]["default"] == default
+
+
+@pytest.mark.parametrize(
+    "previous, expected",
+    [
+        (None, {"accounts": 4}),
+        ({}, {"accounts": 4}),
+        ({"port": 8545}, {"port": 8545, "accounts": 4}),
+    ],
+)
+def test_project_cmd_settings_merge(previous, expected):
+    original = {"cmd_settings": previous}
+
+    _recursive_update(original, {"cmd_settings": {"accounts": 4}})
+
+    assert original == {"cmd_settings": expected}
+
+
+def test_project_empty_config_merge():
+    original = {}
+
+    _recursive_update(original, {"networks": {"default": "mainnet"}})
+
+    assert original == {"networks": {"default": "mainnet"}}
 
 
 def test_rpc_project_cmd_settings(devnetwork, testproject, config, project_settings, network_name):
