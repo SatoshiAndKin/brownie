@@ -144,11 +144,17 @@ class VirtualMachineError(Exception):
         if not (isinstance(exc, dict) and "message" in exc):
             raise ValueError(str(exc)) from None
 
-        if "data" not in exc:
-            raise ValueError(exc["message"]) from None
-
         exc_message: str = exc["message"]
         self.message: Final[str] = exc_message.rstrip(".")
+
+        if "data" not in exc:
+            if exc.get("code") == 3 and (
+                self.message == "execution reverted"
+                or self.message.startswith("execution reverted: ")
+            ):
+                self.revert_type = "revert"
+                return
+            raise ValueError(exc["message"]) from None
 
         exc_data = _normalize_tx_error_data(exc["data"])
 

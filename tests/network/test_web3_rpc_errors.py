@@ -2,6 +2,7 @@
 
 import pytest
 from web3.exceptions import Web3RPCError
+from web3.types import RPCError
 
 from brownie.exceptions import VirtualMachineError
 from brownie.network.middlewares.catch_tx_revert import TxRevertCatcherMiddleware
@@ -56,6 +57,34 @@ def test_virtual_machine_error_keeps_brownie_value_error_payloads():
     assert error.revert_type == "revert"
     assert error.pc == 11
     assert error.revert_msg == "boom"
+
+
+@pytest.mark.parametrize("web3_error", [False, True])
+@pytest.mark.parametrize("message", ["execution reverted", "execution reverted: stopped"])
+def test_virtual_machine_error_accepts_revert_without_optional_data(web3_error, message: str):
+    payload: RPCError = {"code": 3, "message": message}
+    exc = (
+        Web3RPCError(message, rpc_response={"error": payload})
+        if web3_error
+        else ValueError(payload)
+    )
+    error = VirtualMachineError(exc)
+    assert error.message == message
+    assert error.revert_type == "revert"
+    assert error.revert_msg is None and error.pc is None and error.txid == ""
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"code": -32000, "message": "missing trie node"},
+        {"code": 3, "message": "invalid block"},
+        {"code": -32602, "message": "invalid argument"},
+    ],
+)
+def test_virtual_machine_error_does_not_hide_rpc_failures_without_data(payload):
+    with pytest.raises(ValueError, match=payload["message"]):
+        VirtualMachineError(ValueError(payload))
 
 
 @pytest.mark.parametrize("method", ["eth_call", "eth_estimateGas"])
