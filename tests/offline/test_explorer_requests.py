@@ -16,9 +16,7 @@ def explorer(monkeypatch):
     monkeypatch.setattr(
         contract,
         "web3",
-        SimpleNamespace(
-            eth=SimpleNamespace(get_code=lambda address: b"\x60\x00"), chain_id=1
-        ),
+        SimpleNamespace(eth=SimpleNamespace(get_code=lambda address: b"\x60\x00"), chain_id=1),
     )
     monkeypatch.setattr(contract, "_unverified_addresses", set())
     monkeypatch.delenv("ETHERSCAN_TOKEN", raising=False)
@@ -69,9 +67,7 @@ def test_unverified_source_has_the_same_typed_error_on_first_and_cached_reads(ex
 
 
 def test_api_failure_is_infrastructure_not_unverified_source(explorer):
-    calls = explorer(
-        (200, {"status": "0", "message": "NOTOK", "result": "Invalid API Key"})
-    )
+    calls = explorer((200, {"status": "0", "message": "NOTOK", "result": "Invalid API Key"}))
     with pytest.raises(ConnectionError, match="Invalid API Key"):
         contract._fetch_from_explorer(ADDRESS, "getabi", True)
     assert ADDRESS not in contract._unverified_addresses
@@ -99,9 +95,7 @@ def test_transient_request_recovers_once(explorer, failure):
 )
 def test_retry_exhaustion_is_infrastructure_error(explorer, failure):
     calls = explorer(failure("stalled"), failure("still stalled"))
-    with pytest.raises(
-        ConnectionError, match="Etherscan getsourcecode.*after 2 attempts"
-    ) as error:
+    with pytest.raises(ConnectionError, match="Etherscan getsourcecode.*after 2 attempts") as error:
         contract._fetch_from_explorer(ADDRESS, "getsourcecode", True)
     assert isinstance(error.value.__cause__, failure)
     assert len(calls) == 2
@@ -118,9 +112,7 @@ def test_transient_http_recovers_once(explorer, status):
 @pytest.mark.parametrize("status,attempts", [(400, 1), (401, 1), (404, 1), (503, 2)])
 def test_http_failure_is_bounded(explorer, status, attempts):
     calls = explorer(status, status)
-    with pytest.raises(
-        ConnectionError, match=f"HTTP {status}.*after {attempts} attempt"
-    ):
+    with pytest.raises(ConnectionError, match=f"HTTP {status}.*after {attempts} attempt"):
         contract._fetch_from_explorer(ADDRESS, "getsourcecode", True)
     assert len(calls) == attempts
 
@@ -139,12 +131,8 @@ def test_certificate_failure_is_not_retried(explorer):
     assert len(calls) == 1
 
 
-@pytest.mark.parametrize(
-    "protocol,recover", [("http", False), ("http", True), ("https", False)]
-)
-def test_real_stalled_connection_or_read_has_a_finite_deadline(
-    monkeypatch, protocol, recover
-):
+@pytest.mark.parametrize("protocol,recover", [("http", False), ("http", True), ("https", False)])
+def test_real_stalled_connection_or_read_has_a_finite_deadline(monkeypatch, protocol, recover):
     import socketserver
     import threading
 
@@ -172,9 +160,7 @@ def test_real_stalled_connection_or_read_has_a_finite_deadline(
     monkeypatch.setattr(
         contract,
         "web3",
-        SimpleNamespace(
-            eth=SimpleNamespace(get_code=lambda address: b"\x60\x00"), chain_id=1
-        ),
+        SimpleNamespace(eth=SimpleNamespace(get_code=lambda address: b"\x60\x00"), chain_id=1),
     )
     monkeypatch.setattr(contract, "_unverified_addresses", set())
     monkeypatch.delenv("ETHERSCAN_TOKEN", raising=False)
@@ -190,9 +176,7 @@ def test_real_stalled_connection_or_read_has_a_finite_deadline(
         monkeypatch.setattr(contract.requests, "get", local_get)
         try:
             if recover:
-                assert contract._fetch_from_explorer(
-                    ADDRESS, "getsourcecode", True
-                ) == {
+                assert contract._fetch_from_explorer(ADDRESS, "getsourcecode", True) == {
                     "status": "1",
                     "result": [],
                 }
@@ -205,3 +189,51 @@ def test_real_stalled_connection_or_read_has_a_finite_deadline(
             release.set()
             server.shutdown()
             thread.join()
+
+
+@pytest.mark.parametrize("action", ["getabi", "getsourcecode"])
+@pytest.mark.parametrize(
+    "reason", ["Max calls per sec rate limit reached (3/sec)", "Max rate limit reached"]
+)
+def test_api_rate_limit_recovers_once(explorer, monkeypatch, action, reason):
+    delays = []
+    monkeypatch.setattr(contract.time, "sleep", delays.append)
+    limited = (200, {"status": "0", "message": "NOTOK", "result": reason})
+    calls = explorer(limited, 200)
+    assert contract._fetch_from_explorer(ADDRESS, action, True) == RESULT
+    assert len(calls) == 2 and calls[0] == calls[1]
+    assert delays == [1]
+    assert ADDRESS not in contract._unverified_addresses
+
+
+@pytest.mark.parametrize("action", ["getabi", "getsourcecode"])
+def test_api_rate_limit_exhaustion_is_explicit_and_not_cached(explorer, monkeypatch, action):
+    delays = []
+    monkeypatch.setattr(contract.time, "sleep", delays.append)
+    limited = (
+        200,
+        {
+            "status": "0",
+            "message": "NOTOK",
+            "result": "Max calls per sec rate limit reached (3/sec)",
+        },
+    )
+    calls = explorer(limited, limited)
+    with pytest.raises(ConnectionError, match="after 2 attempts.*rate limit"):
+        contract._fetch_from_explorer(ADDRESS, action, True)
+    assert len(calls) == 2 and delays == [1]
+    assert ADDRESS not in contract._unverified_addresses
+
+
+@pytest.mark.parametrize("api_first", [False, True])
+@pytest.mark.parametrize("other", [503, requests.ReadTimeout("stalled")])
+def test_api_and_transport_failures_share_one_retry_budget(explorer, monkeypatch, api_first, other):
+    delays = []
+    monkeypatch.setattr(contract.time, "sleep", delays.append)
+    limited = (200, {"status": "0", "message": "NOTOK", "result": "Max rate limit reached"})
+    calls = explorer(*([limited, other] if api_first else [other, limited]))
+    with pytest.raises(ConnectionError, match="after 2 attempts"):
+        contract._fetch_from_explorer(ADDRESS, "getabi", True)
+    assert len(calls) == 2
+    assert delays == ([1] if api_first else [])
+    assert ADDRESS not in contract._unverified_addresses

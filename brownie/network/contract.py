@@ -2172,13 +2172,25 @@ def _fetch_from_explorer(address: ChecksumAddress, action: str, silent: bool) ->
                 raise ConnectionError(
                     f"Etherscan {action} for {address} returned invalid JSON"
                 ) from exc
+            if (
+                attempt == 1
+                and int(data["status"]) != 1
+                and isinstance(data.get("result"), str)
+                and "rate limit" in data["result"].lower()
+            ):
+                # Etherscan also reports throttling in HTTP 200 responses.
+                # Leave one rate-limit window before the single retry.
+                time.sleep(1)
+                continue
             break
         finally:
             response.close()
     if int(data["status"]) != 1:
         if data.get("result") == "Contract source code not verified":
             raise ContractNotVerified(f"Source for {address} has not been verified")
-        raise ConnectionError(f"Etherscan {action} for {address} failed: {data}")
+        raise ConnectionError(
+            f"Etherscan {action} for {address} failed after {attempt} attempts: {data}"
+        )
 
     return data
 
