@@ -46,6 +46,7 @@ from brownie.exceptions import (
     BrownieEnvironmentWarning,
     ContractExists,
     ContractNotFound,
+    ContractNotVerified,
     UndeployedLibrary,
     VirtualMachineError,
     decode_typed_error,
@@ -1102,9 +1103,9 @@ class Contract(_DeployedContractBase):
             # if the source is not available, try to fetch only the ABI
             try:
                 data_abi = _fetch_from_explorer(address, "getabi", True)
-            except ValueError as exc:
+            except ContractNotVerified:
                 _unverified_addresses.add(address)
-                raise exc
+                raise
             abi = ujson_loads(data_abi["result"].strip())
             name = "UnknownContractName"
             if not silent:
@@ -2101,7 +2102,7 @@ def _print_natspec(natspec: dict[str, Any]) -> None:
 
 def _fetch_from_explorer(address: ChecksumAddress, action: str, silent: bool) -> dict[str, Any]:
     if address in _unverified_addresses:
-        raise ValueError(f"Source for {address} has not been verified")
+        raise ContractNotVerified(f"Source for {address} has not been verified")
 
     # removeprefix is used for compatibility with both hexbytes<1 and >=1
     code = web3.eth.get_code(address).hex().removeprefix("0x")
@@ -2175,7 +2176,9 @@ def _fetch_from_explorer(address: ChecksumAddress, action: str, silent: bool) ->
         finally:
             response.close()
     if int(data["status"]) != 1:
-        raise ValueError(f"Failed to retrieve data from API: {data}")
+        if data.get("result") == "Contract source code not verified":
+            raise ContractNotVerified(f"Source for {address} has not been verified")
+        raise ConnectionError(f"Etherscan {action} for {address} failed: {data}")
 
     return data
 

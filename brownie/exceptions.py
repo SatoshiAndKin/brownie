@@ -240,6 +240,11 @@ class ContractNotFound(Exception):
 
 
 @final
+class ContractNotVerified(ValueError):
+    """The explorer explicitly reports an unverified contract."""
+
+
+@final
 class ProjectAlreadyLoaded(Exception):
     pass
 
