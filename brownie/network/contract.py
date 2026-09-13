@@ -2141,14 +2141,39 @@ def _fetch_from_explorer(address: ChecksumAddress, action: str, silent: bool) ->
     if not silent:
         print(f"Fetching source of {bright_blue}{address}{color} from Etherscan...")
 
-    response = requests.get(
-        "https://api.etherscan.io/v2/api", params=params, headers=REQUEST_HEADERS
-    )
-    if response.status_code != 200:
-        raise ConnectionError(
-            f"Status {response.status_code} when querying Etherscan: {response.text}"
-        )
-    data = response.json()
+    for attempt in range(1, 3):
+        try:
+            response = requests.get(
+                "https://api.etherscan.io/v2/api",
+                params=params,
+                headers=REQUEST_HEADERS,
+                timeout=(10, 30),
+            )
+        except requests.RequestException as exc:
+            transient = isinstance(exc, (requests.Timeout, requests.ConnectionError))
+            if attempt == 1 and transient and not isinstance(exc, requests.exceptions.SSLError):
+                continue
+            raise ConnectionError(
+                f"Etherscan {action} for {address} failed after {attempt} attempts "
+                f"({type(exc).__name__})"
+            ) from exc
+        try:
+            if response.status_code != 200:
+                if attempt == 1 and response.status_code in (408, 429, 500, 502, 503, 504):
+                    continue
+                raise ConnectionError(
+                    f"Etherscan {action} for {address}: HTTP {response.status_code} "
+                    f"after {attempt} attempts"
+                )
+            try:
+                data = response.json()
+            except requests.exceptions.JSONDecodeError as exc:
+                raise ConnectionError(
+                    f"Etherscan {action} for {address} returned invalid JSON"
+                ) from exc
+            break
+        finally:
+            response.close()
     if int(data["status"]) != 1:
         raise ValueError(f"Failed to retrieve data from API: {data}")
 
