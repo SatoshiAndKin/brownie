@@ -22,15 +22,15 @@ CACHE_FILTER_THREAD_JOIN_TIMEOUT: Final = 1.0
 
 
 def _strip_push_data(bytecode: bytes) -> bytes:
+    opcodes = bytearray()
     idx = 0
     while idx < len(bytecode):
-        # if instruction is between PUSH1 and PUSH32
-        if 0x60 <= bytecode[idx] <= 0x7F:
-            offset = idx + 1
-            length = bytecode[idx] - 0x5F
-            bytecode = bytecode[:offset] + bytecode[offset + length :]
+        opcode = bytecode[idx]
+        opcodes.append(opcode)
         idx += 1
-    return bytecode
+        if 0x60 <= opcode <= 0x7F:
+            idx += opcode - 0x5F
+    return bytes(opcodes)
 
 
 def is_cacheable_bytecode(web3: Web3, bytecode: faster_hexbytes.HexBytes) -> bool:

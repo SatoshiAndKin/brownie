@@ -57718,7 +57718,7 @@ CPyL3: ;
     CPy_INCREF(cpy_r_val);
     return cpy_r_val;
 CPyL4: ;
-    cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'on', 'true', 'True'}) */
+    cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'on', 'True', 'true'}) */
     CPy_INCREF(cpy_r_val);
     if (likely(PyUnicode_Check(cpy_r_val)))
         cpy_r_r2 = cpy_r_val;
@@ -57738,7 +57738,7 @@ CPyL4: ;
     cpy_r_r6 = 1 ? Py_True : Py_False;
     return cpy_r_r6;
 CPyL8: ;
-    cpy_r_r7 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'off', 'false', 'False'}) */
+    cpy_r_r7 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'False', 'off', 'false'}) */
     CPy_INCREF(cpy_r_val);
     if (likely(PyUnicode_Check(cpy_r_val)))
         cpy_r_r8 = cpy_r_val;
@@ -106210,182 +106210,190 @@ fail: ;
 }
 
 PyObject *CPyDef_caching____strip_push_data(PyObject *cpy_r_bytecode) {
+    PyObject *cpy_r_r0;
+    PyObject *cpy_r_r1;
+    PyObject *cpy_r_r2;
+    PyObject *cpy_r_r3;
     CPyTagged cpy_r_idx;
-    CPyPtr cpy_r_r0;
-    int64_t cpy_r_r1;
-    CPyTagged cpy_r_r2;
-    int64_t cpy_r_r3;
-    char cpy_r_r4;
+    CPyPtr cpy_r_r4;
     int64_t cpy_r_r5;
-    char cpy_r_r6;
-    char cpy_r_r7;
+    CPyTagged cpy_r_r6;
+    int64_t cpy_r_r7;
     char cpy_r_r8;
-    CPyTagged cpy_r_r9;
-    int64_t cpy_r_r10;
+    int64_t cpy_r_r9;
+    char cpy_r_r10;
     char cpy_r_r11;
-    int64_t cpy_r_r12;
-    char cpy_r_r13;
-    char cpy_r_r14;
-    char cpy_r_r15;
-    char cpy_r_r16;
-    char cpy_r_r17;
-    int64_t cpy_r_r18;
-    char cpy_r_r19;
+    char cpy_r_r12;
+    CPyTagged cpy_r_r13;
+    PyObject *cpy_r_r14;
+    PyObject *cpy_r_r15;
+    PyObject **cpy_r_r17;
+    PyObject *cpy_r_r18;
+    CPyTagged cpy_r_r19;
     int64_t cpy_r_r20;
     char cpy_r_r21;
-    char cpy_r_r22;
+    int64_t cpy_r_r22;
     char cpy_r_r23;
     char cpy_r_r24;
     char cpy_r_r25;
-    CPyTagged cpy_r_r26;
-    CPyTagged cpy_r_r27;
-    CPyTagged cpy_r_r28;
-    PyObject *cpy_r_r29;
-    CPyTagged cpy_r_r30;
-    PyObject *cpy_r_r31;
-    PyObject *cpy_r_r32;
-    CPyTagged cpy_r_r33;
-    PyObject *cpy_r_r34;
+    char cpy_r_r26;
+    char cpy_r_r27;
+    int64_t cpy_r_r28;
+    char cpy_r_r29;
+    int64_t cpy_r_r30;
+    char cpy_r_r31;
+    char cpy_r_r32;
+    char cpy_r_r33;
+    char cpy_r_r34;
+    char cpy_r_r35;
+    CPyTagged cpy_r_r36;
+    CPyTagged cpy_r_r37;
+    PyObject *cpy_r_r38;
+    PyObject **cpy_r_r40;
+    PyObject *cpy_r_r41;
+    PyObject *cpy_r_r42;
+    PyObject *cpy_r_r43;
+    cpy_r_r0 = CPyModule_builtins;
+    cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'bytearray' */
+    cpy_r_r2 = CPyObject_GetAttr(cpy_r_r0, cpy_r_r1);
+    if (unlikely(cpy_r_r2 == NULL)) {
+        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
+        goto CPyL24;
+    }
+    cpy_r_r3 = PyObject_Vectorcall(cpy_r_r2, 0, 0, 0);
+    CPy_DECREF(cpy_r_r2);
+    if (unlikely(cpy_r_r3 == NULL)) {
+        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
+        goto CPyL24;
+    }
     cpy_r_idx = 0;
-    goto CPyL25;
-CPyL1: ;
-    cpy_r_r0 = (CPyPtr)&((PyVarObject *)cpy_r_bytecode)->ob_size;
-    cpy_r_r1 = *(int64_t *)cpy_r_r0;
-    cpy_r_r2 = cpy_r_r1 << 1;
-    cpy_r_r3 = cpy_r_idx & 1;
-    cpy_r_r4 = cpy_r_r3 != 0;
-    if (cpy_r_r4) goto CPyL3;
-    cpy_r_r5 = cpy_r_r2 & 1;
-    cpy_r_r6 = cpy_r_r5 != 0;
-    if (!cpy_r_r6) goto CPyL4;
 CPyL3: ;
-    cpy_r_r7 = CPyTagged_IsLt_(cpy_r_idx, cpy_r_r2);
-    if (cpy_r_r7) {
-        goto CPyL5;
-    } else
-        goto CPyL26;
-CPyL4: ;
-    cpy_r_r8 = (Py_ssize_t)cpy_r_idx < (Py_ssize_t)cpy_r_r2;
-    if (!cpy_r_r8) goto CPyL26;
+    cpy_r_r4 = (CPyPtr)&((PyVarObject *)cpy_r_bytecode)->ob_size;
+    cpy_r_r5 = *(int64_t *)cpy_r_r4;
+    cpy_r_r6 = cpy_r_r5 << 1;
+    cpy_r_r7 = cpy_r_idx & 1;
+    cpy_r_r8 = cpy_r_r7 != 0;
+    if (cpy_r_r8) goto CPyL5;
+    cpy_r_r9 = cpy_r_r6 & 1;
+    cpy_r_r10 = cpy_r_r9 != 0;
+    if (!cpy_r_r10) goto CPyL6;
 CPyL5: ;
-    cpy_r_r9 = CPyBytes_GetItem(cpy_r_bytecode, cpy_r_idx);
-    if (unlikely(cpy_r_r9 == CPY_INT_TAG)) {
+    cpy_r_r11 = CPyTagged_IsLt_(cpy_r_idx, cpy_r_r6);
+    if (cpy_r_r11) {
+        goto CPyL7;
+    } else
+        goto CPyL25;
+CPyL6: ;
+    cpy_r_r12 = (Py_ssize_t)cpy_r_idx < (Py_ssize_t)cpy_r_r6;
+    if (!cpy_r_r12) goto CPyL25;
+CPyL7: ;
+    cpy_r_r13 = CPyBytes_GetItem(cpy_r_bytecode, cpy_r_idx);
+    if (unlikely(cpy_r_r13 == CPY_INT_TAG)) {
+        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
+        goto CPyL26;
+    }
+    cpy_r_r14 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* 'append' */
+    CPyTagged_INCREF(cpy_r_r13);
+    cpy_r_r15 = CPyTagged_StealAsObject(cpy_r_r13);
+    PyObject *cpy_r_r16[2] = {cpy_r_r3, cpy_r_r15};
+    cpy_r_r17 = (PyObject **)&cpy_r_r16;
+    cpy_r_r18 = PyObject_VectorcallMethod(cpy_r_r14, cpy_r_r17, 9223372036854775810ULL, 0);
+    if (unlikely(cpy_r_r18 == NULL)) {
         CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
         goto CPyL27;
-    }
-    cpy_r_r10 = 192 & 1;
-    cpy_r_r11 = cpy_r_r10 != 0;
-    if (cpy_r_r11) goto CPyL8;
-    cpy_r_r12 = cpy_r_r9 & 1;
-    cpy_r_r13 = cpy_r_r12 != 0;
-    if (!cpy_r_r13) goto CPyL9;
-CPyL8: ;
-    cpy_r_r14 = CPyTagged_IsLt_(cpy_r_r9, 192);
-    cpy_r_r15 = cpy_r_r14 ^ 1;
-    cpy_r_r16 = cpy_r_r15;
-    goto CPyL10;
-CPyL9: ;
-    cpy_r_r17 = (Py_ssize_t)192 <= (Py_ssize_t)cpy_r_r9;
-    cpy_r_r16 = cpy_r_r17;
-CPyL10: ;
-    if (cpy_r_r16) {
-        goto CPyL12;
     } else
         goto CPyL28;
-CPyL11: ;
-    if (cpy_r_r16) {
-        goto CPyL17;
-    } else
-        goto CPyL22;
-CPyL12: ;
-    cpy_r_r18 = cpy_r_r9 & 1;
-    cpy_r_r19 = cpy_r_r18 != 0;
-    if (cpy_r_r19) goto CPyL14;
-    cpy_r_r20 = 254 & 1;
+CPyL9: ;
+    CPy_DECREF(cpy_r_r15);
+    cpy_r_r19 = CPyTagged_Add(cpy_r_idx, 2);
+    CPyTagged_DECREF(cpy_r_idx);
+    cpy_r_idx = cpy_r_r19;
+    cpy_r_r20 = 192 & 1;
     cpy_r_r21 = cpy_r_r20 != 0;
-    if (!cpy_r_r21) goto CPyL15;
-CPyL14: ;
-    cpy_r_r22 = CPyTagged_IsLt_(254, cpy_r_r9);
-    cpy_r_r23 = cpy_r_r22 ^ 1;
-    cpy_r_r24 = cpy_r_r23;
-    goto CPyL16;
-CPyL15: ;
-    cpy_r_r25 = (Py_ssize_t)cpy_r_r9 <= (Py_ssize_t)254;
-    cpy_r_r24 = cpy_r_r25;
-CPyL16: ;
-    CPyTagged_DECREF(cpy_r_r9);
-    if (!cpy_r_r24) goto CPyL22;
-CPyL17: ;
-    cpy_r_r26 = CPyTagged_Add(cpy_r_idx, 2);
-    cpy_r_r27 = CPyBytes_GetItem(cpy_r_bytecode, cpy_r_idx);
-    if (unlikely(cpy_r_r27 == CPY_INT_TAG)) {
-        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
+    if (cpy_r_r21) goto CPyL11;
+    cpy_r_r22 = cpy_r_r13 & 1;
+    cpy_r_r23 = cpy_r_r22 != 0;
+    if (!cpy_r_r23) goto CPyL12;
+CPyL11: ;
+    cpy_r_r24 = CPyTagged_IsLt_(cpy_r_r13, 192);
+    cpy_r_r25 = cpy_r_r24 ^ 1;
+    cpy_r_r26 = cpy_r_r25;
+    goto CPyL13;
+CPyL12: ;
+    cpy_r_r27 = (Py_ssize_t)192 <= (Py_ssize_t)cpy_r_r13;
+    cpy_r_r26 = cpy_r_r27;
+CPyL13: ;
+    if (cpy_r_r26) goto CPyL15;
+    if (cpy_r_r26) {
+        goto CPyL20;
+    } else
         goto CPyL29;
-    }
-    cpy_r_r28 = CPyTagged_Subtract(cpy_r_r27, 190);
-    CPyTagged_DECREF(cpy_r_r27);
-    cpy_r_r29 = CPyBytes_GetSlice(cpy_r_bytecode, 0, cpy_r_r26);
-    if (unlikely(cpy_r_r29 == NULL)) {
+CPyL15: ;
+    cpy_r_r28 = cpy_r_r13 & 1;
+    cpy_r_r29 = cpy_r_r28 != 0;
+    if (cpy_r_r29) goto CPyL17;
+    cpy_r_r30 = 254 & 1;
+    cpy_r_r31 = cpy_r_r30 != 0;
+    if (!cpy_r_r31) goto CPyL18;
+CPyL17: ;
+    cpy_r_r32 = CPyTagged_IsLt_(254, cpy_r_r13);
+    cpy_r_r33 = cpy_r_r32 ^ 1;
+    cpy_r_r34 = cpy_r_r33;
+    goto CPyL19;
+CPyL18: ;
+    cpy_r_r35 = (Py_ssize_t)cpy_r_r13 <= (Py_ssize_t)254;
+    cpy_r_r34 = cpy_r_r35;
+CPyL19: ;
+    if (!cpy_r_r34) goto CPyL29;
+CPyL20: ;
+    cpy_r_r36 = CPyTagged_Subtract(cpy_r_r13, 190);
+    CPyTagged_DECREF(cpy_r_r13);
+    cpy_r_r37 = CPyTagged_Add(cpy_r_idx, cpy_r_r36);
+    CPyTagged_DECREF(cpy_r_idx);
+    CPyTagged_DECREF(cpy_r_r36);
+    cpy_r_idx = cpy_r_r37;
+    goto CPyL3;
+CPyL21: ;
+    cpy_r_r38 = (PyObject *)&PyBytes_Type;
+    PyObject *cpy_r_r39[1] = {cpy_r_r3};
+    cpy_r_r40 = (PyObject **)&cpy_r_r39;
+    cpy_r_r41 = PyObject_Vectorcall(cpy_r_r38, cpy_r_r40, 1, 0);
+    if (unlikely(cpy_r_r41 == NULL)) {
         CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
         goto CPyL30;
     }
-    cpy_r_r30 = CPyTagged_Add(cpy_r_r26, cpy_r_r28);
-    CPyTagged_DECREF(cpy_r_r26);
-    CPyTagged_DECREF(cpy_r_r28);
-    cpy_r_r31 = CPyBytes_GetSlice(cpy_r_bytecode, cpy_r_r30, 9223372036854775806LL);
-    CPy_DECREF(cpy_r_bytecode);
-    CPyTagged_DECREF(cpy_r_r30);
-    if (unlikely(cpy_r_r31 == NULL)) {
-        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
-        goto CPyL31;
+    CPy_DECREF(cpy_r_r3);
+    if (likely(PyBytes_Check(cpy_r_r41) || PyByteArray_Check(cpy_r_r41)))
+        cpy_r_r42 = cpy_r_r41;
+    else {
+        CPy_TypeErrorTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", 33, CPyStatic_caching___globals, "bytes", cpy_r_r41);
+        goto CPyL24;
     }
-    cpy_r_r32 = CPyBytes_Concat(cpy_r_r29, cpy_r_r31);
-    CPy_DECREF(cpy_r_r31);
-    if (unlikely(cpy_r_r32 == NULL)) {
-        CPy_AddTraceback("brownie/network/middlewares/caching.py", "_strip_push_data", DIFFCHECK_PLACEHOLDER, CPyStatic_caching___globals);
-        goto CPyL32;
-    }
-    cpy_r_bytecode = cpy_r_r32;
-CPyL22: ;
-    cpy_r_r33 = CPyTagged_Add(cpy_r_idx, 2);
-    CPyTagged_DECREF(cpy_r_idx);
-    cpy_r_idx = cpy_r_r33;
-    goto CPyL1;
-CPyL23: ;
-    return cpy_r_bytecode;
+    return cpy_r_r42;
 CPyL24: ;
-    cpy_r_r34 = NULL;
-    return cpy_r_r34;
+    cpy_r_r43 = NULL;
+    return cpy_r_r43;
 CPyL25: ;
-    CPy_INCREF(cpy_r_bytecode);
-    goto CPyL1;
-CPyL26: ;
     CPyTagged_DECREF(cpy_r_idx);
-    goto CPyL23;
-CPyL27: ;
-    CPy_DecRef(cpy_r_bytecode);
+    goto CPyL21;
+CPyL26: ;
+    CPy_DecRef(cpy_r_r3);
     CPyTagged_DecRef(cpy_r_idx);
+    goto CPyL24;
+CPyL27: ;
+    CPy_DecRef(cpy_r_r3);
+    CPyTagged_DecRef(cpy_r_idx);
+    CPyTagged_DecRef(cpy_r_r13);
+    CPy_DecRef(cpy_r_r15);
     goto CPyL24;
 CPyL28: ;
-    CPyTagged_DECREF(cpy_r_r9);
-    goto CPyL11;
+    CPy_DECREF(cpy_r_r18);
+    goto CPyL9;
 CPyL29: ;
-    CPy_DecRef(cpy_r_bytecode);
-    CPyTagged_DecRef(cpy_r_idx);
-    CPyTagged_DecRef(cpy_r_r26);
-    goto CPyL24;
+    CPyTagged_DECREF(cpy_r_r13);
+    goto CPyL3;
 CPyL30: ;
-    CPy_DecRef(cpy_r_bytecode);
-    CPyTagged_DecRef(cpy_r_idx);
-    CPyTagged_DecRef(cpy_r_r26);
-    CPyTagged_DecRef(cpy_r_r28);
-    goto CPyL24;
-CPyL31: ;
-    CPyTagged_DecRef(cpy_r_idx);
-    CPy_DecRef(cpy_r_r29);
-    goto CPyL24;
-CPyL32: ;
-    CPyTagged_DecRef(cpy_r_idx);
+    CPy_DecRef(cpy_r_r3);
     goto CPyL24;
 }
 
@@ -277433,7 +277441,7 @@ const char * const CPyLit_Str[] = {
     "\004\017REQUEST_HEADERS\vNetworkType\rNetworkConfig\017ConfigContainer",
     "\005\022set_active_network\fclear_active\bproperty\016active_network\fnetwork_type",
     "\a\004mode\006Config\nConfigDict\004once\016filterwarnings\bcategory\017parse_variables",
-    "\t\aresolve\002on\004True\003off\005False\aMapping\aTypeVar\boverload\020dotenv.variables",
+    "\t\aresolve\002on\004True\005False\003off\aMapping\aTypeVar\boverload\020dotenv.variables",
     "\006\002_T\r^[-+]\?[0-9]+$\tINT_REGEX\nEthAddress\005Fixed\003Wei",
     "\005\031brownie.convert.datatypes\ato_bool\bto_bytes\nto_decimal\006to_int",
     "\a\tto_string\ato_uint\024brownie.convert.main\a__new__\b__hash__\006__lt__\006__le__",
@@ -277507,12 +277515,12 @@ const char * const CPyLit_Str[] = {
     "\005\024BrownieMiddlewareABC\vMiddlewares\tRPCParams\fBatchRequest\rBatchResponse",
     "\004\rMakeRequestFn\022MakeBatchRequestFn\apartial\033brownie.network.middlewares",
     "\004\002w3\020load_middlewares\"brownie.network.middlewares._setup\f_middlewares",
-    "\004\bget_code\006latest\bcache.db\033CREATE TABLE IF NOT EXISTS ",
+    "\005\tbytearray\bget_code\006latest\bcache.db\033CREATE TABLE IF NOT EXISTS ",
     "\004\031 (method, params, result)\005clear\026loop_exception_handler\reager_caching",
-    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\031eth_getTransactionReceipt",
-    "\003\030eth_getTransactionByHash\024eth_getFilterChanges\023eth_signTransaction",
-    "\003\022eth_newBlockFilter\026eth_sendRawTransaction\022web3_clientVersion",
-    "\004\veth_chainId\023eth_sendTransaction\023eth_uninstallFilter\beth_sign",
+    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\023eth_uninstallFilter",
+    "\004\veth_chainId\beth_sign\022eth_newBlockFilter\023eth_sendTransaction",
+    "\003\030eth_getTransactionByHash\022web3_clientVersion\024eth_getFilterChanges",
+    "\003\031eth_getTransactionReceipt\023eth_signTransaction\026eth_sendRawTransaction",
     "\004\nseparators\023SELECT result FROM \034 WHERE method=\? AND params=\?\amaxsize",
     "\a\ajsonrpc\0032.0\006result\nsetdefault\fblock_filter\visConnected\tfilter_id",
     "\003\020uninstall_filter\vloop_thread\016current_thread",
@@ -277699,8 +277707,8 @@ const char * const CPyLit_Str[] = {
     "\001+404 error when attempting to download from ",
     "\001C - are you sure this is a valid mix\? https://github.com/brownie-mix",
     "\002\025Received status code \" when attempting to download from ",
-    "\b\016content-length\002iB\004tqdm\005total\004unit\nunit_scale\tbytearray\fiter_content",
-    "\004\aBytesIO\aZipFile\nextractall)https://api.github.com/repos/brownie-mix/",
+    "\b\016content-length\002iB\004tqdm\005total\004unit\nunit_scale\fiter_content\aBytesIO",
+    "\003\aZipFile\nextractall)https://api.github.com/repos/brownie-mix/",
     "\003\fbrownie-mix/\026 when retrieving repo \032 information from GHAPI: \'",
     "\001\030\n\nMissing or forbidden.\n",
     "\001=If this issue persists, generate a Github API token and store",
@@ -277826,60 +277834,60 @@ const int CPyLit_Tuple[] = {
     2, 45, 49, 1, 787, 1, 971, 1, 899, 2, 839, 973, 1, 974, 2, 975, 863,
     3, 1006, 1006, 1006, 1, 2273, 2, 1008, 1009, 2, 882, 750, 3, 368, 13,
     628, 1, 1011, 1, 1012, 1, 1013, 1, 1015, 1, 1027, 2, 871, 872, 2,
-    1054, 393, 3, 2104, 2252, 2239, 1, 2099, 2, 1069, 1015, 2, 40, 47, 3,
-    1017, 1022, 1019, 1, 1070, 2, 368, 369, 2, 1090, 1085, 3, 368, 484,
-    369, 1, 1085, 1, 1103, 1, 1104, 2, 1089, 1100, 1, 31, 6, 1125, 1126,
-    1127, 741, 1128, 1129, 3, 1125, 1126, 1127, 2, 1156, 1157, 1, 1175, 3,
-    1204, 1204, 1204, 3, 1205, 1205, 1205, 4, 2303, 2252, 2239, 2304, 2,
-    882, 829, 1, 1185, 7, 959, 368, 13, 628, 752, 484, 369, 4, 1208, 798,
-    1209, 757, 1, 1210, 3, 859, 859, 866, 1, 2311, 1, 25, 1, 683, 2, 1182,
-    1177, 1, 1211, 5, 1213, 1214, 1192, 1215, 1216, 1, 1155, 2, 1174, 863,
-    6, 1243, 1244, 1245, 1246, 48, 886, 1, 556, 1, 1267, 5, 368, 13, 628,
-    752, 484, 3, 1294, 1294, 1294, 1, 2324, 2, 964, 757, 5, 27, 42, 22,
-    25, 51, 1, 1250, 1, 1200, 4, 1297, 1298, 1299, 1300, 2, 1302, 1303, 2,
-    1305, 1306, 13, 1308, 1213, 1214, 633, 1309, 1310, 1311, 1312, 1313,
-    1314, 1315, 1316, 1317, 2, 1318, 1319, 1, 1328, 1, 1335, 1, 1156, 1,
-    1347, 3, 1348, 1335, 1349, 1, 393, 4, 1390, 1391, 1392, 967, 4, 1403,
-    1391, 1392, 967, 2, 1289, 1404, 4, 1409, 1398, 1289, 211, 3, 211,
-    1398, 1289, 2, 1391, 1412, 3, 1403, 1392, 967, 3, 1390, 967, 1428, 2,
-    1403, 967, 3, 1390, 1435, 967, 2, 1435, 967, 3, 1442, 1442, 1442, 1,
-    2352, 5, 368, 1444, 13, 628, 484, 3, 1445, 1445, 1445, 3, 2100, 2324,
-    2355, 1, 42, 1, 1446, 1, 582, 2, 1449, 1410, 3, 42, 21, 25, 1, 644, 2,
-    1177, 1342, 4, 1451, 1452, 1302, 1453, 13, 1454, 1455, 1192, 1456,
-    1310, 1457, 1458, 1459, 1215, 1216, 1460, 1461, 1462, 3, 628, 752,
-    484, 4, 1214, 1461, 1498, 1499, 1, 1508, 2, 1523, 1508, 2, 211, 1289,
-    4, 646, 647, 1547, 1548, 2, 13, 484, 3, 1502, 1502, 1502, 3, 1319,
-    1319, 1319, 3, 2100, 2373, 2374, 1, 1504, 1, 1506, 2, 1177, 1513, 3,
-    1451, 1452, 1453, 1, 1410, 13, 1552, 1454, 1214, 1311, 1458, 1459,
-    1215, 1216, 1462, 1553, 1554, 1555, 1556, 4, 13, 626, 484, 369, 9,
-    1575, 1213, 1214, 1192, 1312, 1314, 1458, 1215, 1216, 2, 1576, 1577,
-    1, 2095, 1, 829, 4, 368, 625, 13, 369, 5, 27, 20, 43, 29, 39, 1, 1598,
-    3, 940, 941, 393, 1, 28, 1, 1732, 2, 1749, 1732, 3, 1757, 1758, 1759,
-    3, 1776, 1776, 1776, 6, 2182, 2094, 2113, 2104, 2183, 2395, 1, 1709,
-    2, 829, 749, 1, 1762, 1, 1779, 4, 368, 13, 626, 628, 1, 1718, 3, 1782,
-    1782, 1782, 2, 2403, 2166, 1, 1343, 1, 1756, 1, 1503, 8, 27, 42, 26,
+    1055, 393, 3, 2104, 2252, 2239, 1, 2099, 2, 1070, 1015, 2, 40, 47, 3,
+    1017, 1022, 1019, 1, 1071, 2, 368, 369, 2, 1091, 1086, 3, 368, 484,
+    369, 1, 1086, 1, 1104, 1, 1105, 2, 1090, 1101, 1, 31, 6, 1126, 1127,
+    1128, 741, 1129, 1130, 3, 1126, 1127, 1128, 2, 1157, 1158, 1, 1176, 3,
+    1205, 1205, 1205, 3, 1206, 1206, 1206, 4, 2303, 2252, 2239, 2304, 2,
+    882, 829, 1, 1186, 7, 959, 368, 13, 628, 752, 484, 369, 4, 1209, 798,
+    1210, 757, 1, 1211, 3, 859, 859, 866, 1, 2311, 1, 25, 1, 683, 2, 1183,
+    1178, 1, 1212, 5, 1214, 1215, 1193, 1216, 1217, 1, 1156, 2, 1175, 863,
+    6, 1244, 1245, 1246, 1247, 48, 886, 1, 556, 1, 1268, 5, 368, 13, 628,
+    752, 484, 3, 1295, 1295, 1295, 1, 2324, 2, 964, 757, 5, 27, 42, 22,
+    25, 51, 1, 1251, 1, 1201, 4, 1298, 1299, 1300, 1301, 2, 1303, 1304, 2,
+    1306, 1307, 13, 1309, 1214, 1215, 633, 1310, 1311, 1312, 1313, 1314,
+    1315, 1316, 1317, 1318, 2, 1319, 1320, 1, 1329, 1, 1336, 1, 1157, 1,
+    1348, 3, 1349, 1336, 1350, 1, 393, 4, 1391, 1392, 1393, 967, 4, 1404,
+    1392, 1393, 967, 2, 1290, 1405, 4, 1410, 1399, 1290, 211, 3, 211,
+    1399, 1290, 2, 1392, 1413, 3, 1404, 1393, 967, 3, 1391, 967, 1429, 2,
+    1404, 967, 3, 1391, 1436, 967, 2, 1436, 967, 3, 1443, 1443, 1443, 1,
+    2352, 5, 368, 1445, 13, 628, 484, 3, 1446, 1446, 1446, 3, 2100, 2324,
+    2355, 1, 42, 1, 1447, 1, 582, 2, 1450, 1411, 3, 42, 21, 25, 1, 644, 2,
+    1178, 1343, 4, 1452, 1453, 1303, 1454, 13, 1455, 1456, 1193, 1457,
+    1311, 1458, 1459, 1460, 1216, 1217, 1461, 1462, 1463, 3, 628, 752,
+    484, 4, 1215, 1462, 1499, 1500, 1, 1509, 2, 1524, 1509, 2, 211, 1290,
+    4, 646, 647, 1548, 1549, 2, 13, 484, 3, 1503, 1503, 1503, 3, 1320,
+    1320, 1320, 3, 2100, 2373, 2374, 1, 1505, 1, 1507, 2, 1178, 1514, 3,
+    1452, 1453, 1454, 1, 1411, 13, 1553, 1455, 1215, 1312, 1459, 1460,
+    1216, 1217, 1463, 1554, 1555, 1556, 1557, 4, 13, 626, 484, 369, 9,
+    1576, 1214, 1215, 1193, 1313, 1315, 1459, 1216, 1217, 2, 1577, 1578,
+    1, 2095, 1, 829, 4, 368, 625, 13, 369, 5, 27, 20, 43, 29, 39, 1, 1599,
+    3, 940, 941, 393, 1, 28, 1, 1733, 2, 1750, 1733, 3, 1758, 1759, 1760,
+    3, 1776, 1776, 1776, 6, 2182, 2094, 2113, 2104, 2183, 2395, 1, 1710,
+    2, 829, 749, 1, 1762, 1, 1779, 4, 368, 13, 626, 628, 1, 1719, 3, 1782,
+    1782, 1782, 2, 2403, 2166, 1, 1344, 1, 1757, 1, 1504, 8, 27, 42, 26,
     43, 37, 25, 45, 49, 8, 92, 653, 160, 1785, 1786, 1787, 1788, 201, 6,
-    1703, 1698, 1723, 1689, 1634, 82, 4, 1175, 1629, 1626, 1222, 3, 1789,
-    1790, 1791, 1, 603, 3, 1579, 1578, 1583, 2, 1576, 1792, 9, 1575, 1308,
-    1213, 1214, 633, 1312, 1314, 1793, 1794, 3, 2094, 2104, 2183, 5, 1530,
-    1527, 1528, 44, 837, 1, 1830, 1, 1819, 1, 1832, 1, 1810, 2, 1834,
-    1779, 3, 27, 26, 25, 3, 388, 1243, 1246, 3, 1861, 1861, 1861, 1, 2426,
+    1704, 1699, 1724, 1690, 1635, 82, 4, 1176, 1630, 1627, 1223, 3, 1789,
+    1790, 1791, 1, 603, 3, 1580, 1579, 1584, 2, 1577, 1792, 9, 1576, 1309,
+    1214, 1215, 633, 1313, 1315, 1793, 1794, 3, 2094, 2104, 2183, 5, 1531,
+    1528, 1529, 44, 837, 1, 1830, 1, 1819, 1, 1832, 1, 1810, 2, 1834,
+    1779, 3, 27, 26, 25, 3, 388, 1244, 1247, 3, 1861, 1861, 1861, 1, 2426,
     2, 13, 369, 1, 2100, 1, 757, 1, 1859, 6, 41, 27, 31, 33, 39, 25, 3,
-    1847, 1689, 1856, 2, 1214, 1458, 1, 1864, 2, 13, 627, 1, 22, 2, 1214,
-    1457, 2, 2094, 2183, 4, 27, 45, 47, 51, 1, 92, 1, 1889, 1, 861, 1,
-    1246, 1, 1583, 2, 1214, 1914, 4, 1915, 165, 202, 203, 1, 1868, 1,
+    1847, 1690, 1856, 2, 1215, 1459, 1, 1864, 2, 13, 627, 1, 22, 2, 1215,
+    1458, 2, 2094, 2183, 4, 27, 45, 47, 51, 1, 92, 1, 1889, 1, 861, 1,
+    1247, 1, 1584, 2, 1215, 1914, 4, 1915, 165, 202, 203, 1, 1868, 1,
     1930, 1, 1834, 4, 368, 1938, 13, 369, 1, 1939, 1, 1918, 1, 1931, 1,
     21, 2, 1910, 1911, 8, 959, 368, 626, 627, 628, 1946, 675, 369, 1, 831,
-    3, 964, 798, 757, 1, 1947, 1, 1949, 1, 704, 2, 1964, 97, 1, 1177, 3,
+    3, 964, 798, 757, 1, 1947, 1, 1949, 1, 704, 2, 1964, 97, 1, 1178, 3,
     1989, 1989, 1989, 2, 2104, 2465, 6, 368, 13, 626, 628, 484, 369, 3,
-    1987, 1987, 1987, 1, 2468, 1, 1469, 1, 1992, 1, 1979, 3, 1997, 1997,
-    1997, 1, 2473, 1, 260, 2, 2035, 2036, 3, 1207, 1207, 1207, 2, 2477,
+    1987, 1987, 1987, 1, 2468, 1, 1470, 1, 1992, 1, 1979, 3, 1997, 1997,
+    1997, 1, 2473, 1, 260, 2, 2035, 2036, 3, 1208, 1208, 1208, 2, 2477,
     2252, 2, 47, 51
 };
 const int CPyLit_FrozenSet[] = {
-    7, 3, 670, 469, 671, 3, 672, 470, 673, 11, 1043, 1044, 1045, 1046,
-    1047, 1048, 1049, 1050, 1051, 1052, 1053, 2, 1086, 1087, 2, 1048,
-    1051, 3, 1048, 1086, 1051, 2, 2086, 2087
+    7, 3, 670, 671, 469, 3, 672, 673, 470, 11, 1044, 1045, 1046, 1047,
+    1048, 1049, 1050, 1051, 1052, 1053, 1054, 2, 1087, 1088, 2, 1054,
+    1048, 3, 1087, 1054, 1048, 2, 2086, 2087
 };
 CPyModule *CPyModule_brownie____c_constants__internal = NULL;
 CPyModule *CPyModule_brownie____c_constants;
