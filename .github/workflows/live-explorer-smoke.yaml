@@ -44,3 +44,13 @@ jobs:
 
       - name: Run live explorer smoke
         run: uv run --locked --only-group dev tox -e live-explorer
+
+      - name: Run compiled offline regressions
+        working-directory: ${{ runner.temp }}
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: >-
+          "$GITHUB_WORKSPACE/.tox/live-explorer/bin/python" -m pytest
+          -o addopts=
+          --confcutdir="$GITHUB_WORKSPACE/tests/offline"
+          "$GITHUB_WORKSPACE/tests/offline" -q
