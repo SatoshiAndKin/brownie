@@ -43,4 +43,4 @@ jobs:
           key: live-explorer-${{ runner.os }}-3.13-${{ hashFiles('pyproject.toml', 'setup.py', 'requirements.txt', 'uv.lock', 'tox.ini', '.python-version') }}
 
       - name: Run live explorer smoke
-        run: uv run --python 3.13 --locked --only-group dev tox -e live-explorer
+        run: uv run --locked --only-group dev tox -e live-explorer
