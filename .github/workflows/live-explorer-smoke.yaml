@@ -51,5 +51,6 @@ jobs:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: >-
           "$GITHUB_WORKSPACE/.tox/live-explorer/bin/python" -m pytest
+          -o addopts=
           --confcutdir="$GITHUB_WORKSPACE/tests/offline"
           "$GITHUB_WORKSPACE/tests/offline" -q
