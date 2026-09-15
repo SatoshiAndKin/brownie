@@ -57718,7 +57718,7 @@ CPyL3: ;
     CPy_INCREF(cpy_r_val);
     return cpy_r_val;
 CPyL4: ;
-    cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'on', 'True', 'true'}) */
+    cpy_r_r1 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'true', 'True', 'on'}) */
     CPy_INCREF(cpy_r_val);
     if (likely(PyUnicode_Check(cpy_r_val)))
         cpy_r_r2 = cpy_r_val;
@@ -277441,7 +277441,7 @@ const char * const CPyLit_Str[] = {
     "\004\017REQUEST_HEADERS\vNetworkType\rNetworkConfig\017ConfigContainer",
     "\005\022set_active_network\fclear_active\bproperty\016active_network\fnetwork_type",
     "\a\004mode\006Config\nConfigDict\004once\016filterwarnings\bcategory\017parse_variables",
-    "\t\aresolve\002on\004True\005False\003off\aMapping\aTypeVar\boverload\020dotenv.variables",
+    "\t\aresolve\004True\002on\005False\003off\aMapping\aTypeVar\boverload\020dotenv.variables",
     "\006\002_T\r^[-+]\?[0-9]+$\tINT_REGEX\nEthAddress\005Fixed\003Wei",
     "\005\031brownie.convert.datatypes\ato_bool\bto_bytes\nto_decimal\006to_int",
     "\a\tto_string\ato_uint\024brownie.convert.main\a__new__\b__hash__\006__lt__\006__le__",
@@ -277517,15 +277517,15 @@ const char * const CPyLit_Str[] = {
     "\004\002w3\020load_middlewares\"brownie.network.middlewares._setup\f_middlewares",
     "\005\tbytearray\bget_code\006latest\bcache.db\033CREATE TABLE IF NOT EXISTS ",
     "\004\031 (method, params, result)\005clear\026loop_exception_handler\reager_caching",
-    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\023eth_uninstallFilter",
-    "\004\veth_chainId\beth_sign\022eth_newBlockFilter\023eth_sendTransaction",
-    "\003\030eth_getTransactionByHash\022web3_clientVersion\024eth_getFilterChanges",
-    "\003\031eth_getTransactionReceipt\023eth_signTransaction\026eth_sendRawTransaction",
-    "\004\nseparators\023SELECT result FROM \034 WHERE method=\? AND params=\?\amaxsize",
-    "\a\ajsonrpc\0032.0\006result\nsetdefault\fblock_filter\visConnected\tfilter_id",
-    "\003\020uninstall_filter\vloop_thread\016current_thread",
-    "\003&brownie/network/middlewares/caching.py\nLogReceipt\006Cursor",
-    "\003\021brownie.utils.sql\veth_getCode\016LONGTERM_CACHE",
+    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\veth_chainId",
+    "\003\023eth_signTransaction\023eth_uninstallFilter\023eth_sendTransaction",
+    "\003\026eth_sendRawTransaction\beth_sign\022eth_newBlockFilter",
+    "\003\031eth_getTransactionReceipt\022web3_clientVersion\030eth_getTransactionByHash",
+    "\003\024eth_getFilterChanges\nseparators\023SELECT result FROM ",
+    "\006\034 WHERE method=\? AND params=\?\amaxsize\ajsonrpc\0032.0\006result\nsetdefault",
+    "\005\fblock_filter\visConnected\tfilter_id\020uninstall_filter\vloop_thread",
+    "\003\016current_thread&brownie/network/middlewares/caching.py\nLogReceipt",
+    "\004\006Cursor\021brownie.utils.sql\veth_getCode\016LONGTERM_CACHE",
     "\002 CACHE_FILTER_THREAD_JOIN_TIMEOUT#brownie.network.middlewares.caching",
     "\a\ttable_key\003cur\004lock\v_stop_event\tis_killed\nlast_block\017last_block_seen",
     "\004\flast_request\030RequestCachingMiddleware\fWeb3RPCError\beth_call",
@@ -277885,9 +277885,9 @@ const int CPyLit_Tuple[] = {
     2252, 2, 47, 51
 };
 const int CPyLit_FrozenSet[] = {
-    7, 3, 670, 671, 469, 3, 672, 673, 470, 11, 1044, 1045, 1046, 1047,
-    1048, 1049, 1050, 1051, 1052, 1053, 1054, 2, 1087, 1088, 2, 1054,
-    1048, 3, 1087, 1054, 1048, 2, 2086, 2087
+    7, 3, 469, 670, 671, 3, 672, 673, 470, 11, 1044, 1045, 1046, 1047,
+    1048, 1049, 1050, 1051, 1052, 1053, 1054, 2, 1087, 1088, 2, 1047,
+    1048, 3, 1047, 1048, 1087, 2, 2086, 2087
 };
 CPyModule *CPyModule_brownie____c_constants__internal = NULL;
 CPyModule *CPyModule_brownie____c_constants;
