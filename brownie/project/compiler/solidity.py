@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
 import logging
-from typing import Any, Deque, Final
+from typing import Any, Deque, Final, TypeAlias, cast
 
 import semantic_version
 import solcast
 import solcx
 from eth_typing import ABIElement, HexStr
+from packaging.version import Version as PVersion
 from requests.exceptions import ConnectionError
 from solcast.nodes import NodeBase, is_inside_offset
 
@@ -53,15 +54,22 @@ EVM_VERSION_MAPPING: Final = [
     ("byzantium", Version("0.4.0")),
 ]
 
-PcMap = dict[Count, ProgramCounter]
-StatementNodes = dict[str, set[Offset]]
-BranchNodes = dict[str, set[NodeBase]]
+PcMap: TypeAlias = dict[Count, ProgramCounter]
+StatementNodes: TypeAlias = dict[str, set[Offset]]
+BranchNodes: TypeAlias = dict[str, set[NodeBase]]
+SolcxVersion: TypeAlias = VersionSpec | PVersion
 
 _BINOPS_PARAMS: Final = {"nodeType": "BinaryOperation", "typeDescriptions.typeString": "bool"}
 
 
+def _as_version(version: SolcxVersion) -> semantic_version.Version:
+    if isinstance(version, Version):
+        return version
+    return Version(str(version))
+
+
 def get_version() -> semantic_version.Version:
-    return solcx.get_solc_version(with_commit_hash=True)
+    return _as_version(solcx.get_solc_version(with_commit_hash=True))
 
 
 def compile_from_input_json(
@@ -96,7 +104,7 @@ def compile_from_input_json(
             print(f"  EVM Version: {settings['evmVersion'].capitalize()}")
 
     try:
-        return solcx.compile_standard(input_json, allow_paths=allow_paths)
+        return solcx.compile_standard(cast(dict[Any, Any], input_json), allow_paths=allow_paths)
     except solcx.exceptions.SolcError as e:
         raise CompilerError(e, "solc")
 
@@ -108,7 +116,7 @@ def set_solc_version(version: VersionSpec) -> str:
     if version < Version("0.4.22"):
         raise IncompatibleSolcVersion("Brownie only supports Solidity versions >=0.4.22")
     try:
-        solcx.set_solc_version(version, silent=True)
+        solcx.set_solc_version(str(version), silent=True)
     except solcx.exceptions.SolcNotInstalled:
         if version not in _get_solc_version_list()[0]:
             raise IncompatibleSolcVersion(
@@ -116,14 +124,14 @@ def set_solc_version(version: VersionSpec) -> str:
                 f"manually compile from source with `solcx.compile_solc('{version}')`"
             )
         install_solc(version)
-        solcx.set_solc_version(version, silent=True)
+        solcx.set_solc_version(str(version), silent=True)
     return str(solcx.get_solc_version())
 
 
 def install_solc(*versions: VersionSpec) -> None:
     """Installs solc versions."""
     for version in versions:
-        solcx.install_solc(version, show_progress=False)
+        solcx.install_solc(str(version), show_progress=False)
 
 
 def get_abi(contract_source: str, allow_paths: str | None = None) -> dict[str, list[ABIElement]]:
@@ -192,7 +200,7 @@ def find_solc_versions(
     # install new versions if needed
     if to_install:
         install_solc(*to_install)
-        installed_versions = solcx.get_installed_solc_versions()
+        installed_versions = list(map(_as_version, solcx.get_installed_solc_versions()))
     elif new_versions and not silent:
         print(
             f"New compatible solc version{'s' if len(new_versions) > 1 else ''}"
@@ -255,10 +263,10 @@ def find_best_solc_version(
 
 def _get_solc_version_list() -> tuple[VersionList, VersionList]:
     global AVAILABLE_SOLC_VERSIONS
-    installed_versions: VersionList = solcx.get_installed_solc_versions()
+    installed_versions: VersionList = list(map(_as_version, solcx.get_installed_solc_versions()))
     if AVAILABLE_SOLC_VERSIONS is None:
         try:
-            AVAILABLE_SOLC_VERSIONS = solcx.get_installable_solc_versions()
+            AVAILABLE_SOLC_VERSIONS = list(map(_as_version, solcx.get_installable_solc_versions()))
         except ConnectionError:
             if not installed_versions:
                 raise ConnectionError("Solc not installed and cannot connect to GitHub")
@@ -308,13 +316,19 @@ def _get_unique_build_json(
     build_json: SolidityBuildJson = {  # type: ignore [typeddict-item]
         "allSourcePaths": paths,
         "bytecode": bytecode,
-        "bytecodeSha1": sha1(_remove_metadata(bytecode).encode()).hexdigest(),  # type: ignore [typeddict-item]
+        "bytecodeSha1": sha1(
+            _remove_metadata(bytecode).encode()
+        ).hexdigest(),  # type: ignore [typeddict-item]
         "coverageMap": {"statements": statement_map, "branches": branch_map},
         "dependencies": dependencies,
         "offset": contract_node.offset,
         "pcMap": pc_map,
         "type": contract_node.contractKind,
     }
+    if link_references := output_evm["bytecode"].get("linkReferences", {}):
+        build_json["linkReferences"] = link_references
+    if deployed_link_references := bytecode_json.get("linkReferences", {}):
+        build_json["deployedLinkReferences"] = deployed_link_references
     return build_json
 
 
@@ -325,12 +339,15 @@ def _format_link_references(evm: dict) -> HexStr:
     link_refs: dict[str, dict] = bytecode_json.get("linkReferences", {})
     references = ((k, x) for v in link_refs.values() for k, x in v.items())
     for n, loc in ((i[0], x["start"] * 2) for i in references for x in i[1]):
-        bytecode = f"{bytecode[:loc]}__{n[:36]:_<36}__{bytecode[loc+40:]}"  # type: ignore [assignment]
+        bytecode = cast(
+            HexStr,
+            f"{bytecode[:loc]}__{n[:36]:_<36}__{bytecode[loc + 40:]}",
+        )
     return bytecode
 
 
 def _remove_metadata(bytecode: HexStr) -> HexStr:
-    return bytecode[: -(int(bytecode[-4:], 16) + 2) * 2] if bytecode else ""  # type: ignore [return-value]
+    return cast(HexStr, bytecode[: -(int(bytecode[-4:], 16) + 2) * 2] if bytecode else "")
 
 
 def _generate_coverage_data(
@@ -433,7 +450,7 @@ def _generate_coverage_data(
         # set source offset (-1 means none)
         if start == -1:
             continue
-        offset: Offset = (start, start + stop)  # type: ignore [assignment]
+        offset: Offset = (start, start + stop)
         this["offset"] = offset
 
         if op == "REVERT" and not optimizer_revert:
@@ -478,9 +495,9 @@ def _generate_coverage_data(
         try:
             # set fn name and statement coverage marker
             if "offset" in pc_list[-2] and offset == pc_list[-2]["offset"]:
-                this["fn"] = active_fn_name  # type: ignore [typeddict-item]
+                this["fn"] = active_fn_name
             else:
-                active_fn_node, active_fn_name = _get_active_fn(active_source_node, offset)  # type: ignore [arg-type]
+                active_fn_node, active_fn_name = _get_active_fn(active_source_node, offset)
                 this["fn"] = active_fn_name
                 stmt_offset: Offset = next(
                     i for i in stmt_nodes[contract_id] if sources.is_inside_offset(offset, i)
@@ -529,7 +546,9 @@ def _generate_coverage_data(
             offset = node.offset
             # if the node offset is not in the source map, apply it's offset to the JUMPI op
             if not any("offset" in x and x["offset"] == offset for x in pc_list):
-                pc_list[values[0]].update(offset=offset, jump_revert=True)  # type: ignore [call-arg]
+                pc_list[values[0]].update(
+                    offset=offset, jump_revert=True
+                )  # type: ignore [call-arg]
                 del values[0]
 
     # set branch index markers and build final branch map
@@ -539,11 +558,11 @@ def _generate_coverage_data(
             # for branch to be hit, need an op relating to the source and the next JUMPI
             # this is because of how the compiler optimizes nested BinaryOperations
             if "fn" in pc_list[idx[0]]:
-                fn = pc_list[idx[0]]["fn"]
+                fn = cast(str, pc_list[idx[0]]["fn"])
                 pc_list[idx[0]]["branch"] = count
                 pc_list[idx[1]]["branch"] = count
                 node = next(i for i in branch_original[path] if i.offset == offset)
-                branch_map[path].setdefault(fn, {})[count] = offset + (node.jump,)  # type: ignore [arg-type]
+                branch_map[path].setdefault(fn, {})[count] = offset + (node.jump,)
                 count += 1
 
     pc_map = PCMap({i.pop("pc"): i for i in pc_list})
@@ -594,7 +613,9 @@ def _find_revert_offset(
         and next_offset != fn_node_offset
         and is_inside_offset(next_offset, fn_node_offset)
     ):
-        pc_list[-1].update(path=str(source_node.contract_id), fn=fn_name, offset=next_offset)  # type: ignore [call-arg]
+        pc_list[-1].update(
+            path=str(source_node.contract_id), fn=fn_name, offset=next_offset
+        )  # type: ignore [call-arg]
         return
 
     # if any of the previous conditions are not satisfied, this is the final revert
