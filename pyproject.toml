@@ -86,7 +86,7 @@ dev = [
   "tox",
   "tox-uv",
   "twine",
-  "uv",
+  "uv>=0.11.16,<0.12",
   "wheel",
 ]
 docs = [
