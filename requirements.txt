@@ -20,7 +20,7 @@ bitarray==3.11.0
     # via eth-account
 cbor2==5.9.0
     # via vyper
-cchecksum==0.4.4
+cchecksum==0.4.5
     # via
     #   eth-pydantic-types
     #   faster-eth-abi
@@ -49,7 +49,7 @@ eth-account==0.13.7
     # via
     #   eip712
     #   web3
-eth-event==1.4.10
+eth-event @ git+https://github.com/SatoshiAndKin/eth-event.git@5da843c62c6edc6e74daf8c163c74c33f23bc04f
 eth-hash==0.8.0
     # via
     #   cchecksum
@@ -93,11 +93,11 @@ exceptiongroup==1.3.1 ; python_full_version < '3.11'
     # via pytest
 execnet==2.1.2
     # via pytest-xdist
-faster-eth-abi==5.2.30
+faster-eth-abi @ git+https://github.com/SatoshiAndKin/faster-eth-abi.git@c47ee635c91c476f906c62249bdd5f18603f0dc4
     # via eth-event
-faster-eth-utils==5.3.28
+faster-eth-utils @ git+https://github.com/SatoshiAndKin/faster-eth-utils.git@088caf1cecb0740386b45784b2d7211abe07986d
     # via faster-eth-abi
-faster-hexbytes==1.3.8
+faster-hexbytes @ git+https://github.com/SatoshiAndKin/faster-hexbytes.git@677ae29fce0f7f1049515bb7207a0702e7d013ad
     # via eth-event
 frozenlist==1.8.0
     # via
