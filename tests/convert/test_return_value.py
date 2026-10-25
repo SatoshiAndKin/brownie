@@ -128,6 +128,23 @@ def test_hexstring_length():
     assert b == "0x000000000000001234"
 
 
+@pytest.mark.parametrize(
+    "values, expected",
+    [
+        ([1], [1]),
+        (["label", 2], ("label", 2)),
+        ([Wei("1 ether")], [10**18]),
+        ([[1, 2], 3], ((1, 2), 3)),
+        (["1 ether"], [10**18]),
+    ],
+)
+def test_compare_scalar_and_nested_values(values, expected):
+    result = ReturnValue(values)
+    assert result == expected
+    assert expected == result
+    assert not (result != expected)
+
+
 def test_hashable():
     assert hash(ReturnValue([1, 2])) == hash(tuple([1, 2]))
     assert set(ReturnValue([3, 1, 3, 3, 7])) == {3, 1, 3, 3, 7}
