@@ -5,19 +5,9 @@ from contextlib import suppress
 from typing import Any
 
 import pytest
+from requests import Response
 
 import brownie.network.contract as contract_module
-
-
-class MockExplorerResponse:
-    status_code = 200
-
-    def __init__(self, data: dict[str, Any]) -> None:
-        self._data = data
-        self.text = json.dumps(data)
-
-    def json(self) -> dict[str, Any]:
-        return self._data
 
 
 class MockExplorer:
@@ -117,7 +107,7 @@ class MockExplorer:
             with suppress(Exception):
                 contract_module.Contract.remove_deployment(address)
 
-    def _get(self, _url: str, params: dict[str, Any], **_kwargs: Any) -> MockExplorerResponse:
+    def _get(self, _url: str, params: dict[str, Any], **_kwargs: Any) -> Response:
         address = self._normalize(params["address"])
         action = params["action"]
         self.calls.append({"address": address, "action": action, "params": params.copy()})
@@ -127,7 +117,11 @@ class MockExplorer:
         except KeyError:
             raise AssertionError(f"No mock explorer response for {address} {action}") from None
 
-        return MockExplorerResponse(data)
+        response = Response()
+        response.status_code = 200
+        response._content = json.dumps(data).encode("utf-8")
+        response.encoding = "utf-8"
+        return response
 
     def _get_code(self, address: str, *args: Any, **kwargs: Any) -> Any:
         try:
