@@ -176,7 +176,7 @@ def _base_config(tmp_path_factory, xdist_id, network_name, pytestconfig):
 def _project_factory(tmp_path_factory):
     path = tmp_path_factory.mktemp("base")
     path.rmdir()
-    shutil.copytree("tests/data/brownie-test-project", path)
+    shutil.copytree(Path(__file__).parent / "data" / "brownie-test-project", path)
 
     p = _load_project(brownie.project, path, "TestProject")
     p.close()
