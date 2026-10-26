@@ -9,6 +9,7 @@ to load any plugins.
 """
 
 import sys
+from pathlib import Path
 from typing import Any, NewType
 
 import eth_typing
@@ -20,4 +21,4 @@ if not hasattr(eth_typing, "ContractName"):
     eth_typing.Manifest = NewType("Manifest", dict[str, Any])
 
 # Now run pytest, forwarding all CLI arguments
-sys.exit(pytest.main(sys.argv[1:]))
+sys.exit(pytest.main(["--ignore", str(Path(__file__).with_name("data")), *sys.argv[1:]]))
