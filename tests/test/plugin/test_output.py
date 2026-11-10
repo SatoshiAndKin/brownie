@@ -55,7 +55,8 @@ def test_stdout_capture(plugintester):
     result = plugintester.runpytest("-s")
     output = result.stdout.str()
 
-    assert output.count("::test_stuff") == 2
+    result.assert_outcomes(passed=1)
+    result.stdout.fnmatch_lines(["*::test_stuff RUNNING", "*::test_stuff PASSED"])
     assert "oh hai mark" in output
 
 
