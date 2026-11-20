@@ -199,41 +199,6 @@ typedef struct tuple_T16OOOOOOOOOOOOOOOO {
 } tuple_T16OOOOOOOOOOOOOOOO;
 #endif
 
-#ifndef MYPYC_DECLARED_tuple_T4IIIO
-#define MYPYC_DECLARED_tuple_T4IIIO
-typedef struct tuple_T4IIIO {
-    CPyTagged f0;
-    CPyTagged f1;
-    CPyTagged f2;
-    PyObject *f3;
-} tuple_T4IIIO;
-#endif
-
-#ifndef MYPYC_DECLARED_tuple_T3IIO
-#define MYPYC_DECLARED_tuple_T3IIO
-typedef struct tuple_T3IIO {
-    CPyTagged f0;
-    CPyTagged f1;
-    PyObject *f2;
-} tuple_T3IIO;
-#endif
-
-#ifndef MYPYC_DECLARED_tuple_T1C
-#define MYPYC_DECLARED_tuple_T1C
-typedef struct tuple_T1C {
-    char f0;
-} tuple_T1C;
-#endif
-
-#ifndef MYPYC_DECLARED_tuple_T3IIC
-#define MYPYC_DECLARED_tuple_T3IIC
-typedef struct tuple_T3IIC {
-    CPyTagged f0;
-    CPyTagged f1;
-    char f2;
-} tuple_T3IIC;
-#endif
-
 #ifndef MYPYC_DECLARED_tuple_T5OT2IIOOO
 #define MYPYC_DECLARED_tuple_T5OT2IIOOO
 typedef struct tuple_T5OT2IIOOO {
@@ -253,6 +218,13 @@ typedef struct tuple_T4OT2IIOO {
     PyObject *f2;
     PyObject *f3;
 } tuple_T4OT2IIOO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T1C
+#define MYPYC_DECLARED_tuple_T1C
+typedef struct tuple_T1C {
+    char f0;
+} tuple_T1C;
 #endif
 
 #ifndef MYPYC_DECLARED_tuple_T4CCCC
@@ -306,6 +278,34 @@ typedef struct tuple_T21OOOOOOOOOOOOOOOOOOOOO {
 } tuple_T21OOOOOOOOOOOOOOOOOOOOO;
 #endif
 
+#ifndef MYPYC_DECLARED_tuple_T4IIIO
+#define MYPYC_DECLARED_tuple_T4IIIO
+typedef struct tuple_T4IIIO {
+    CPyTagged f0;
+    CPyTagged f1;
+    CPyTagged f2;
+    PyObject *f3;
+} tuple_T4IIIO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T3IIO
+#define MYPYC_DECLARED_tuple_T3IIO
+typedef struct tuple_T3IIO {
+    CPyTagged f0;
+    CPyTagged f1;
+    PyObject *f2;
+} tuple_T3IIO;
+#endif
+
+#ifndef MYPYC_DECLARED_tuple_T3IIC
+#define MYPYC_DECLARED_tuple_T3IIC
+typedef struct tuple_T3IIC {
+    CPyTagged f0;
+    CPyTagged f1;
+    char f2;
+} tuple_T3IIC;
+#endif
+
 #ifndef MYPYC_DECLARED_tuple_T2OC
 #define MYPYC_DECLARED_tuple_T2OC
 typedef struct tuple_T2OC {
@@ -347,9 +347,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_cmd;
-    PyObject *_i;
-    PyObject *_cmd_list;
 } brownie____cli_____main_____main_envObject;
 
 typedef struct {
@@ -363,19 +360,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_args;
-    PyObject *_project_path;
-    PyObject *_build_path;
-    PyObject *_contract_artifact_path;
-    PyObject *_interface_artifact_path;
-    PyObject *_name;
-    PyObject *_path;
-    PyObject *_proj;
-    PyObject *_codesize;
-    PyObject *_contract;
-    PyObject *_bytecode;
-    tuple_T2OI _i;
-    CPyTagged _indent;
 } brownie____cli___compile___main_envObject;
 
 typedef struct {
@@ -396,7 +380,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
-    PyObject *__builtins_print;
     PyObject *_console;
 } brownie____cli___console___ConsolePrinterObject;
 
@@ -429,16 +412,6 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *_self;
-    PyObject *_project;
-    PyObject *_extra_locals;
-    char _exit_on_continue;
-    PyObject *_console_settings;
-    PyObject *_i;
-    PyObject *_locals_dict;
-    PyObject *_Gui;
-    PyObject *_history_file;
-    PyObject *_kwargs;
-    PyObject *_key_bindings;
 } brownie____cli___console_____init___3_Console_envObject;
 
 typedef struct {
@@ -452,12 +425,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_self;
-    PyObject *_obj;
-    PyObject *_k;
-    PyObject *_v;
-    PyObject *_results;
-    PyObject *_i;
 } brownie____cli___console____dir_Console_envObject;
 
 typedef struct {
@@ -483,36 +450,20 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *___mypyc_generator_attribute__self;
-    PyObject *___mypyc_generator_attribute__document;
-    PyObject *___mypyc_generator_attribute__complete_event;
-    PyObject *_type;
-    PyObject *_value;
-    PyObject *_traceback;
-    PyObject *_arg;
-    PyObject **_stop_iter_ptr;
-    int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_generator_attribute__text;
-    PyObject *___mypyc_generator_attribute__base;
-    PyObject *___mypyc_generator_attribute__current;
-    PyObject *___mypyc_generator_attribute__completions;
-    PyObject *___mypyc_temp__0;
-    PyObject *___mypyc_temp__1;
-    int64_t ___mypyc_temp__2;
-    PyObject *___mypyc_generator_attribute__i;
-    PyObject *___mypyc_temp__3;
-    PyObject *___mypyc_temp__4;
-    int64_t ___mypyc_temp__5;
-    PyObject *___mypyc_temp__6;
-    int64_t ___mypyc_temp__7;
-    PyObject *___mypyc_generator_attribute__key;
-    tuple_T3OOO ___mypyc_temp__8;
 } brownie____cli___console___get_completions_ConsoleCompleter_envObject;
 
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    uint32_t mypyc_running;
     PyObject *___mypyc_env__;
+    PyObject *___mypyc_generator_frame_attribute__self;
+    PyObject *___mypyc_generator_frame_attribute__document;
+    PyObject *___mypyc_generator_frame_attribute__complete_event;
+    int32_t ___mypyc_next_label__;
+    PyObject *___mypyc_generator_frame_attribute__current;
+    PyObject *___mypyc_generator_frame_attribute__completions;
+    int64_t ___mypyc_temp__3_brownie____cli___console___get_completions_ConsoleCompleter_gen_2;
 } brownie____cli___console___get_completions_ConsoleCompleter_genObject;
 
 typedef struct {
@@ -818,14 +769,11 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__event;
+    uint32_t mypyc_running;
+    PyObject *___mypyc_generator_frame_attribute__event;
     int32_t ___mypyc_next_label__;
-    tuple_T3OOO ___mypyc_temp__0;
-    PyObject *___mypyc_temp__1;
-    PyObject *___mypyc_temp__2;
-    PyObject *___mypyc_temp__3;
-    PyObject *___mypyc_generator_attribute__name;
-    PyObject *___mypyc_generator_attribute__topic;
+    PyObject *___mypyc_temp__2_brownie___convert___normalize____iter_event_topics_gen_0;
+    PyObject *___mypyc_temp__2_brownie___convert___normalize____iter_event_topics_gen_1;
 } brownie___convert___normalize____iter_event_topics_genObject;
 
 typedef struct {
@@ -897,8 +845,6 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *__map_callback_on_list;
-    PyObject *_self;
-    PyObject *_events_data;
 } brownie___network___event____trigger_callbacks__EventWatchData_envObject;
 
 typedef struct {
@@ -953,20 +899,7 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    uint32_t bitmap;
     PyObject *___mypyc_self__;
-    PyObject *_self;
-    PyObject *_stop_event;
-    PyObject *_workers_list;
-    double _sleep_time;
-    PyObject *_due_watch_data;
-    PyObject *_key;
-    PyObject *_elem;
-    double _time_left;
-    PyObject *_latest_events;
-    PyObject *_exc;
-    PyObject *_event_watch_data;
-    char _should_trigger;
 } brownie___network___event____loop_EventWatcher_envObject;
 
 typedef struct {
@@ -1184,13 +1117,12 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__self;
+    uint32_t mypyc_running;
+    PyObject *___mypyc_generator_frame_attribute__self;
     int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_generator_attribute__get_block;
-    PyObject *___mypyc_temp__0;
-    CPyTagged ___mypyc_temp__1;
-    CPyTagged ___mypyc_generator_attribute__i;
-    PyObject *___mypyc_generator_attribute__block;
+    PyObject *___mypyc_generator_frame_attribute__get_block;
+    CPyTagged ___mypyc_temp__3_brownie___network___state_____iter___3_Chain_gen_1;
+    PyObject *___mypyc_temp__2_brownie___network___state_____iter___3_Chain_gen_0;
 } brownie___network___state_____iter___3_Chain_genObject;
 
 typedef struct {
@@ -1202,16 +1134,16 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    uint32_t mypyc_running;
     uint32_t bitmap;
-    PyObject *___mypyc_generator_attribute__self;
-    CPyTagged ___mypyc_generator_attribute__height_buffer;
-    CPyTagged ___mypyc_generator_attribute__poll_interval;
+    PyObject *___mypyc_generator_frame_attribute__self;
+    CPyTagged ___mypyc_generator_frame_attribute__height_buffer;
+    CPyTagged ___mypyc_generator_frame_attribute__poll_interval;
     int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_generator_attribute__last_block;
-    CPyTagged ___mypyc_generator_attribute__last_height;
-    double ___mypyc_generator_attribute__last_poll;
-    PyObject *___mypyc_generator_attribute__get_block;
-    PyObject *___mypyc_generator_attribute__block;
+    PyObject *___mypyc_generator_frame_attribute__last_block;
+    CPyTagged ___mypyc_generator_frame_attribute__last_height;
+    double ___mypyc_generator_frame_attribute__last_poll;
+    PyObject *___mypyc_generator_frame_attribute__get_block;
 } brownie___network___state___new_blocks_Chain_genObject;
 
 typedef struct {
@@ -1367,9 +1299,6 @@ typedef struct {
     PyObject *_self;
     PyObject *_fp_obj;
     PyObject *_sanitize;
-    PyObject *_fp;
-    PyObject *_name;
-    PyObject *_source;
 } brownie___project___flattener___traverse_Flattener_envObject;
 
 typedef struct {
@@ -1413,11 +1342,11 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__self;
+    uint32_t mypyc_running;
+    PyObject *___mypyc_generator_frame_attribute__self;
     int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_temp__0;
-    int64_t ___mypyc_temp__1;
-    PyObject *___mypyc_generator_attribute__i;
+    int64_t ___mypyc_temp__3_brownie___project___main_____iter___3__ProjectBase_gen_0;
+    PyObject *___mypyc_temp__2_brownie___project___main_____iter___3__ProjectBase_gen_0;
 } brownie___project___main_____iter___3__ProjectBase_genObject;
 
 typedef struct {
@@ -1484,10 +1413,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_self;
-    PyObject *_chainid;
-    PyObject *_path;
-    PyObject *_deployments;
 } brownie___project___main____load_deployments_Project_envObject;
 
 typedef struct {
@@ -1606,23 +1531,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_exclude_paths;
-    PyObject *_exclude_contracts;
-    PyObject *_project;
-    PyObject *_gas;
-    PyObject *_sorted_gas;
-    PyObject *_grouped_by_contract;
-    PyObject *_padding;
-    PyObject *_lines;
-    PyObject *_only_include_project;
-    PyObject *_full_name;
-    PyObject *_gas_values;
-    PyObject *_contract;
-    PyObject *_function;
-    PyObject *_source_path;
-    PyObject *_k;
-    CPyTagged _v;
-    PyObject *_functions;
 } brownie___test___output____build_gas_profile_output_envObject;
 
 typedef struct {
@@ -1636,24 +1544,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
-    PyObject *_coverage_eval;
-    PyObject *_exclude_paths;
-    PyObject *_exclude_contracts;
-    PyObject *_projects;
-    PyObject *_project;
-    PyObject *_all_totals;
-    PyObject *_total;
-    PyObject *_filtered;
-    PyObject *_lines;
-    PyObject *_totals;
-    PyObject *_contract_name;
-    PyObject *_pct;
-    PyObject *_cov;
-    PyObject *_branches;
-    PyObject *_results;
-    PyObject *_fn_name;
-    PyObject *_statement_cov;
-    PyObject *_branch_cov;
 } brownie___test___output____build_coverage_output_envObject;
 
 typedef struct {
@@ -1686,10 +1576,6 @@ typedef struct {
     CPyVTableItem *vtable;
     PyObject *___mypyc_self__;
     PyObject *_machine;
-    PyObject *_rules_object;
-    PyObject *_args;
-    PyObject *_settings;
-    PyObject *_kwargs;
 } brownie___test___stateful___state_machine_envObject;
 
 typedef struct {
@@ -1703,7 +1589,6 @@ typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
     vectorcallfunc vectorcall;
-    PyObject *___cache__;
 } brownie___utils____color___ColorObject;
 
 typedef struct {
@@ -1725,31 +1610,10 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
-    PyObject *___mypyc_generator_attribute__data;
+    uint32_t mypyc_running;
+    PyObject *___mypyc_generator_frame_attribute__data;
     int32_t ___mypyc_next_label__;
-    PyObject *___mypyc_temp__0;
-    CPyTagged ___mypyc_temp__1;
-    int64_t ___mypyc_temp__2;
-    PyObject *___mypyc_temp__3;
-    PyObject *___mypyc_generator_attribute__k;
-    PyObject *___mypyc_generator_attribute__v;
-    PyObject *___mypyc_generator_attribute__extra_items_in_deps;
-    PyObject *___mypyc_temp__4;
-    PyObject *___mypyc_temp__5;
-    PyObject *___mypyc_temp__6;
-    PyObject *___mypyc_generator_attribute__item;
-    PyObject *___mypyc_temp__7;
-    PyObject *___mypyc_temp__8;
-    CPyTagged ___mypyc_temp__9;
-    int64_t ___mypyc_temp__10;
-    PyObject *___mypyc_temp__11;
-    PyObject *___mypyc_generator_attribute__dep;
-    PyObject *___mypyc_generator_attribute__ordered;
-    PyObject *___mypyc_temp__12;
-    PyObject *___mypyc_temp__13;
-    CPyTagged ___mypyc_temp__14;
-    int64_t ___mypyc_temp__15;
-    PyObject *___mypyc_temp__16;
+    PyObject *___mypyc_generator_frame_attribute__ordered;
 } brownie___utils___toposort___toposort_genObject;
 
 #endif

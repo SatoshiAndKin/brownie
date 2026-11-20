@@ -2,7 +2,7 @@
 
 import sys
 import traceback
-from collections.abc import Sequence
+from collections.abc import Collection
 from typing import Any, Final, Literal, TypeAlias, cast, final
 
 import pygments
@@ -118,7 +118,7 @@ class Color:
                 text += "{" + self.pretty_dict(v, _indent)
                 continue
             if isinstance(v, (list, tuple, set)):
-                text += str(v)[0] + self.pretty_sequence(v, _indent)  # type: ignore [arg-type]
+                text += str(v)[0] + self.pretty_sequence(v, _indent)
                 continue
             text += self._write(v)
         _indent -= 4
@@ -126,7 +126,7 @@ class Color:
         return text
 
     # format lists for console printing
-    def pretty_sequence(self, value: Sequence, _indent: int = 0) -> str:
+    def pretty_sequence(self, value: Collection, _indent: int = 0) -> str:
         text = ""
         string = str(value)
         start_bracket, stop_bracket = string[0], string[-1]

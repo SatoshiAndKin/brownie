@@ -40,6 +40,8 @@ def test_pretty_dict(colorpatch):
 def test_pretty_sequence(colorpatch):
     x = [1, 2, 3, 4, 5]
     assert x == eval(color.pretty_sequence(x))
+    x = {1, 2, 3, 4, 5}
+    assert x == eval(color.pretty_sequence(x))
     x = (1, 2, 3, 4, 5)
     assert x == eval(color.pretty_sequence(x))
     x = [{"foo": "bar"}, {"potato": 123}]

@@ -41,7 +41,7 @@ jobs:
     - name: Build wheel
       uses: BobTheBuidler/mypycify@v0.4.0
       with:
-        python-version: '3.13'
+        python-version: '3.15'
         hash-key: |
           **/*.py
           pyproject.toml
@@ -55,3 +55,32 @@ jobs:
         pr-branch-strategy: update
         trigger-branch-name: ${{ github.head_ref || github.ref_name }}
         commit-message: "chore: compile C files for source control"
+
+    - name: Select Python for installed-wheel validation
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.15'
+
+    - name: Validate installed Python 3.15 extensions
+      shell: bash
+      run: |
+        python -m pip install dist/*.whl --group test
+        cd "$RUNNER_TEMP"
+        python - <<'PY'
+        import importlib
+        import importlib.machinery
+        for name in (
+            "brownie.convert.normalize",
+            "brownie.network.event",
+            "brownie.network.middlewares.caching",
+            "brownie.project.compiler.solidity",
+        ):
+            module = importlib.import_module(name)
+            assert isinstance(module.__loader__, importlib.machinery.ExtensionFileLoader), module.__file__
+            print(name, module.__file__)
+        PY
+        export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+        python -m pytest -p pytest_cov.plugin --import-mode=importlib --confcutdir="$GITHUB_WORKSPACE/tests/offline" \
+          "$GITHUB_WORKSPACE/tests/offline/test_bytecode_cache.py" -q
+        python -m pytest -p pytest_cov.plugin --import-mode=importlib --confcutdir="$GITHUB_WORKSPACE/tests/utils" \
+          "$GITHUB_WORKSPACE/tests/utils/test_color.py" -k 'pretty_sequence or pretty_dict' -q
