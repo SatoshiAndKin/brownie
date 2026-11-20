@@ -46,6 +46,8 @@ jobs:
           **/*.py
           pyproject.toml
           setup.py
+          requirements.txt
+          uv.lock
         ccache: 'true'
         push-source: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
         normalize-source: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
