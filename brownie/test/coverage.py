@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from typing import Final, NewType
+from typing import Any, Final, NewType
 
 from eth_typing import HexStr
 
@@ -73,9 +73,16 @@ def _add_transaction(coverage_hash: HexStr, coverage_eval: CoverageEval) -> None
     _active_module_coverage_hashes.add(coverage_hash)
 
 
-def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: CoverageEval) -> None:
-    # Add a cached transaction
-    _cached_coverage_eval[coverage_hash] = coverage_eval
+def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
+    # JSON stores coverage sets as lists. Restore them at the cache boundary.
+    _cached_coverage_eval[coverage_hash] = CoverageEval(
+        {
+            ContractName(name): {
+                path: [set(hits) for hits in groups] for path, groups in paths.items()
+            }
+            for name, paths in coverage_eval.items()
+        }
+    )
 
 
 def _check_cached(coverage_hash: HexStr, active: bool = True) -> bool:

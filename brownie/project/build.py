@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # mypy: disable-error-code="index"
 
-from typing import Final, Literal, cast, final
+from typing import Any, Final, Literal, cast, final
 
 from brownie.typing import (
     BuildJson,
@@ -77,6 +77,14 @@ class Build:
         pc_map: dict[int | str, ProgramCounter] = build_json["pcMap"]  # type: ignore [assignment]
         if "0" in pc_map:
             build_json["pcMap"] = PCMap({Count(int(k)): pc_map[k] for k in pc_map})
+        # Restore coverage IDs and tuple offsets after JSON round trips.
+        coverage_map: Any = build_json.get("coverageMap", {})
+        for category in coverage_map.values():
+            for functions in category.values():
+                for name, entries in functions.items():
+                    functions[name] = {
+                        int(index): tuple(offset) for index, offset in entries.items()
+                    }
         self._generate_revert_map(pc_map, build_json["allSourcePaths"], build_json["language"])
 
     def _add_interface(self, build_json: InterfaceBuildJson) -> None:

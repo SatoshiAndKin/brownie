@@ -332,7 +332,7 @@ def _get_highlights(build, coverage_eval) -> dict[str, dict[str, dict[str, list]
 
 
 def _statement_highlights(
-    coverage_eval: dict[str, dict[int, set]],
+    coverage_eval: dict[str, list[set[int]]],
     coverage_map: dict[str, dict[str, dict[int, Any]]],
 ) -> dict[str, list]:
     results: dict[str, list] = {i: [] for i in coverage_map}
@@ -347,7 +347,7 @@ def _statement_highlights(
 
 def _statement_color(
     i: int,
-    coverage_eval: dict[str, dict[int, set]],
+    coverage_eval: dict[str, list[set[int]]],
     path: str,
 ) -> str:
     if path in coverage_eval and int(i) in coverage_eval[path][0]:
@@ -356,7 +356,7 @@ def _statement_color(
 
 
 def _branch_highlights(
-    coverage_eval: dict[str, dict[int, set]],
+    coverage_eval: dict[str, list[set[int]]],
     coverage_map: dict[str, dict[str, dict[int, Any]]],
 ) -> dict[str, list]:
     results: dict[str, list] = {i: [] for i in coverage_map}
@@ -371,9 +371,9 @@ def _branch_highlights(
 
 def _branch_color(
     i: int,
-    coverage_eval: dict[str, dict[int, set]],
+    coverage_eval: dict[str, list[set[int]]],
     path: str,
-    jump: None,
+    jump: bool,
 ) -> str:
     if path not in coverage_eval:
         return "red"

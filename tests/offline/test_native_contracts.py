@@ -1,9 +1,12 @@
 """Public input contracts must also work in the installed native wheel."""
 
+import json
 from importlib.machinery import EXTENSION_SUFFIXES
 from pathlib import Path
 
 import pytest
+import solcx
+from packaging.version import Version
 
 from brownie import _config, project
 from brownie.convert import datatypes, to_address
@@ -75,3 +78,46 @@ def test_report_exclusions_accept_string_or_list(setting):
     assert output._load_report_exclude_data(
         {"exclude_paths": None, "exclude_contracts": setting}
     ) == ([], ["Token"])
+
+
+def test_json_cached_coverage_produces_report(tmp_path):
+    source = """# @version 0.4.3
+@external
+@view
+def value(x: uint256) -> uint256:
+    if x > 0:
+        return 1
+    return 0
+"""
+    compiled = project.compiler.compile_and_format(
+        {"Vyper_contract.vy": source}, vyper_version="0.4.3"
+    )
+    cached_build = json.loads(json.dumps(compiled["Vyper_contract"]))
+    sources = project.sources.Sources({"Vyper_contract.vy": source}, {})
+    build = project.build.Build(sources)
+    build._add_contract(cached_build)
+    key = "native-coverage-roundtrip"
+    assert key not in coverage.get_coverage_eval()
+    coverage._add_cached_transaction(key, {"Vyper_contract": {"0": [[], [], []]}})
+    try:
+        restored = coverage.get_merged_coverage_eval({key: coverage.get_coverage_eval()[key]})
+        result = output._save_coverage_report(build, restored, tmp_path / "coverage.json")
+        report = json.loads(result.read_text())
+        assert "Vyper_contract" in report["coverage"]
+        assert report["highlights"]["statements"]["Vyper_contract"]["0"]
+    finally:
+        coverage._cached_coverage_eval.pop(key, None)
+
+
+def test_vyper_without_pragma_uses_active_version(monkeypatch):
+    def reject_solidity(*args, **kwargs):
+        raise solcx.exceptions.SolcError("not Solidity")
+
+    # Force the language probe to fail at the external compiler boundary.
+    monkeypatch.setattr(solcx, "get_solc_version", lambda **kwargs: Version("0.8.39"))
+    monkeypatch.setattr(solcx, "set_solc_version", lambda *args, **kwargs: None)
+    monkeypatch.setattr(solcx, "compile_standard", reject_solidity)
+    project.compiler.vyper.set_vyper_version("0.4.3")
+    compiled = project.compile_source("@external\ndef value() -> uint256:\n    return 31337")
+    assert compiled._name == "TempVyperProject"
+    assert compiled.Vyper._build["language"] == "Vyper"
