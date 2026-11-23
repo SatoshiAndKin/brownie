@@ -7631,7 +7631,7 @@ __LL43: ;
         if (likely(PyUnicode_Check(__tmp46)))
             __tmp47 = __tmp46;
         else {
-            CPy_TypeError("str", __tmp46);
+            CPy_TypeError("str", __tmp46); 
             __tmp47 = NULL;
         }
         cpy_r_r183.f1 = __tmp47;
@@ -14520,7 +14520,7 @@ __LL58: ;
         if (likely(PyUnicode_Check(__tmp59)))
             __tmp60 = __tmp59;
         else {
-            CPy_TypeError("str", __tmp59);
+            CPy_TypeError("str", __tmp59); 
             __tmp60 = NULL;
         }
         arg_k.f0 = __tmp60;
@@ -14983,7 +14983,7 @@ __LL70: ;
         if (likely(PyUnicode_Check(__tmp71)))
             __tmp72 = __tmp71;
         else {
-            CPy_TypeError("str", __tmp71);
+            CPy_TypeError("str", __tmp71); 
             __tmp72 = NULL;
         }
         cpy_r_r96.f0 = __tmp72;
@@ -74361,7 +74361,7 @@ CPyL17: ;
     if (likely(Py_TYPE(cpy_r_r37) == CPyType_datatypes___Wei))
         cpy_r_r38 = cpy_r_r37;
     else {
-        CPy_TypeError("brownie.convert.datatypes.Wei", cpy_r_r37);
+        CPy_TypeError("brownie.convert.datatypes.Wei", cpy_r_r37); 
         cpy_r_r38 = NULL;
     }
     if (unlikely(cpy_r_r38 == NULL)) {
@@ -85624,7 +85624,7 @@ __LL305: ;
         arg_repeat = NULL;
     }
     if (arg_repeat != NULL) goto __LL306;
-    CPy_TypeError("union[int, bool]", obj_repeat);
+    CPy_TypeError("union[int, bool]", obj_repeat); 
     goto fail;
 __LL306: ;
     char retval = CPyDef_alert_____init___3_Alert_obj_____call__(arg___mypyc_self__, arg_self, arg_fn, arg_args, arg_kwargs, arg_delay, arg_msg, arg_callback, arg_repeat, __bitmap);
@@ -86286,7 +86286,7 @@ PyObject *CPyPy_alert____loop_Alert_obj_____call__(PyObject *self, PyObject *con
         arg_msg = NULL;
     }
     if (arg_msg != NULL) goto __LL309;
-    CPy_TypeError("str or None", obj_msg);
+    CPy_TypeError("str or None", obj_msg); 
     goto fail;
 __LL309: ;
     PyObject *arg_callback;
@@ -86298,7 +86298,7 @@ __LL309: ;
         arg_callback = NULL;
     }
     if (arg_callback != NULL) goto __LL310;
-    CPy_TypeError("object or None", obj_callback);
+    CPy_TypeError("object or None", obj_callback); 
     goto fail;
 __LL310: ;
     PyObject *arg_repeat;
@@ -86567,7 +86567,7 @@ PyObject *CPyPy_alert___wait_Alert_obj_____call__(PyObject *self, PyObject *cons
         arg_timeout = NULL;
     }
     if (arg_timeout != NULL) goto __LL312;
-    CPy_TypeError("float or None", obj_timeout);
+    CPy_TypeError("float or None", obj_timeout); 
     goto fail;
 __LL312: ;
     char retval = CPyDef_alert___wait_Alert_obj_____call__(arg___mypyc_self__, arg_self, arg_timeout);
@@ -87002,7 +87002,7 @@ __LL316: ;
         arg_repeat = NULL;
     }
     if (arg_repeat != NULL) goto __LL317;
-    CPy_TypeError("union[int, bool]", obj_repeat);
+    CPy_TypeError("union[int, bool]", obj_repeat); 
     goto fail;
 __LL317: ;
     PyObject *retval = CPyDef_alert___new(arg_fn, arg_args, arg_kwargs, arg_delay, arg_msg, arg_callback, arg_repeat, __bitmap);
@@ -94341,7 +94341,7 @@ PyObject *CPyPy_event____EventWatchData_____init___3___EventWatchData_glue(PyObj
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     PyObject *arg_event = obj_event;
@@ -94446,7 +94446,7 @@ PyObject *CPyDef_event____EventWatchData___get_new_events___3_EventWatchData_glu
     if (likely(PyList_Check(cpy_r_r3)))
         cpy_r_r4 = cpy_r_r3;
     else {
-        CPy_TypeError("list", cpy_r_r3);
+        CPy_TypeError("list", cpy_r_r3); 
         cpy_r_r4 = NULL;
     }
     if (cpy_r_r4 == NULL) goto CPyL3;
@@ -94467,7 +94467,7 @@ PyObject *CPyPy_event____EventWatchData___get_new_events___3_EventWatchData_glue
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     PyObject *retval = CPyDef_event____EventWatchData___get_new_events___3_EventWatchData_glue(arg_self);
@@ -94592,7 +94592,7 @@ PyObject *CPyPy_event____EventWatchData___reset_timer___3_EventWatchData_glue(Py
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     char retval = CPyDef_event____EventWatchData___reset_timer___3_EventWatchData_glue(arg_self);
@@ -94835,7 +94835,7 @@ PyObject *CPyPy_event____EventWatchData___add_callback___3_EventWatchData_glue(P
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     PyObject *arg_callback = obj_callback;
@@ -94979,7 +94979,7 @@ PyObject *CPyPy_event____EventWatchData___update_delay___3_EventWatchData_glue(P
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     double arg_new_delay;
@@ -95457,7 +95457,7 @@ PyObject *CPyDef_event____EventWatchData____trigger_callbacks___3_EventWatchData
     if (likely(PyList_Check(cpy_r_r3)))
         cpy_r_r4 = cpy_r_r3;
     else {
-        CPy_TypeError("list", cpy_r_r3);
+        CPy_TypeError("list", cpy_r_r3); 
         cpy_r_r4 = NULL;
     }
     if (cpy_r_r4 == NULL) goto CPyL3;
@@ -95479,14 +95479,14 @@ PyObject *CPyPy_event____EventWatchData____trigger_callbacks___3_EventWatchData_
     if (likely(PyObject_TypeCheck(obj_self, CPyType_event____EventWatchData)))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj_self);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj_self); 
         goto fail;
     }
     PyObject *arg_events_data;
     if (likely(PyList_Check(obj_events_data)))
         arg_events_data = obj_events_data;
     else {
-        CPy_TypeError("list", obj_events_data);
+        CPy_TypeError("list", obj_events_data); 
         goto fail;
     }
     PyObject *retval = CPyDef_event____EventWatchData____trigger_callbacks___3_EventWatchData_glue(arg_self, arg_events_data);
@@ -95658,7 +95658,7 @@ PyObject *CPyPy_event____EventWatchData___time_left___3_EventWatchData_glue(PyOb
     if (likely(PyObject_TypeCheck(obj___mypyc_self__, CPyType_event____EventWatchData)))
         arg___mypyc_self__ = obj___mypyc_self__;
     else {
-        CPy_TypeError("brownie.network.event._EventWatchData", obj___mypyc_self__);
+        CPy_TypeError("brownie.network.event._EventWatchData", obj___mypyc_self__); 
         goto fail;
     }
     double retval = CPyDef_event____EventWatchData___time_left___3_EventWatchData_glue(arg___mypyc_self__);
@@ -98706,7 +98706,7 @@ __LL351: ;
         if (likely(PyUnicode_Check(__tmp352)))
             __tmp353 = __tmp352;
         else {
-            CPy_TypeError("str", __tmp352);
+            CPy_TypeError("str", __tmp352); 
             __tmp353 = NULL;
         }
         cpy_r_r73.f0 = __tmp353;
@@ -98716,7 +98716,7 @@ __LL351: ;
         if (likely(PyObject_TypeCheck(__tmp354, CPyType_event____EventWatchData)))
             __tmp355 = __tmp354;
         else {
-            CPy_TypeError("brownie.network.event._EventWatchData", __tmp354);
+            CPy_TypeError("brownie.network.event._EventWatchData", __tmp354); 
             __tmp355 = NULL;
         }
         cpy_r_r73.f1 = __tmp355;
@@ -101918,7 +101918,7 @@ __LL361: ;
         if (likely(PyUnicode_Check(__tmp362)))
             __tmp363 = __tmp362;
         else {
-            CPy_TypeError("str", __tmp362);
+            CPy_TypeError("str", __tmp362); 
             __tmp363 = NULL;
         }
         cpy_r_r103.f0 = __tmp363;
@@ -124525,7 +124525,7 @@ PyObject *CPyPy_state___wait_TxHistory_obj_____call__(PyObject *self, PyObject *
     if (likely(Py_TYPE(obj_self) == CPyType_state___TxHistory))
         arg_self = obj_self;
     else {
-        CPy_TypeError("brownie.network.state.TxHistory", obj_self);
+        CPy_TypeError("brownie.network.state.TxHistory", obj_self); 
         goto fail;
     }
     PyObject *arg_key;
@@ -124541,7 +124541,7 @@ PyObject *CPyPy_state___wait_TxHistory_obj_____call__(PyObject *self, PyObject *
         arg_key = NULL;
     }
     if (arg_key != NULL) goto __LL410;
-    CPy_TypeError("object or None", obj_key);
+    CPy_TypeError("object or None", obj_key); 
     goto fail;
 __LL410: ;
     PyObject *arg_kwargs = obj_kwargs;
@@ -124733,7 +124733,7 @@ PyObject *CPyPy_state___from_sender_TxHistory_obj_____call__(PyObject *self, PyO
     if (arg_account != NULL) goto __LL411;
     arg_account = obj_account;
     if (arg_account != NULL) goto __LL411;
-    CPy_TypeError("union[str, object]", obj_account);
+    CPy_TypeError("union[str, object]", obj_account); 
     goto fail;
 __LL411: ;
     PyObject *retval = CPyDef_state___from_sender_TxHistory_obj_____call__(arg___mypyc_self__, arg_self, arg_account);
@@ -124932,7 +124932,7 @@ PyObject *CPyPy_state___to_receiver_TxHistory_obj_____call__(PyObject *self, PyO
     if (arg_account != NULL) goto __LL413;
     arg_account = obj_account;
     if (arg_account != NULL) goto __LL413;
-    CPy_TypeError("union[str, object]", obj_account);
+    CPy_TypeError("union[str, object]", obj_account); 
     goto fail;
 __LL413: ;
     PyObject *retval = CPyDef_state___to_receiver_TxHistory_obj_____call__(arg___mypyc_self__, arg_self, arg_account);
@@ -125166,7 +125166,7 @@ PyObject *CPyPy_state___of_address_TxHistory_obj_____call__(PyObject *self, PyOb
     if (arg_account != NULL) goto __LL415;
     arg_account = obj_account;
     if (arg_account != NULL) goto __LL415;
-    CPy_TypeError("union[str, object]", obj_account);
+    CPy_TypeError("union[str, object]", obj_account); 
     goto fail;
 __LL415: ;
     PyObject *retval = CPyDef_state___of_address_TxHistory_obj_____call__(arg___mypyc_self__, arg_self, arg_account);
@@ -130481,7 +130481,7 @@ __LL432: ;
         if (likely(PyTuple_Check(__tmp435)))
             __tmp436 = __tmp435;
         else {
-            CPy_TypeError("tuple", __tmp435);
+            CPy_TypeError("tuple", __tmp435); 
             __tmp436 = NULL;
         }
         cpy_r_r36.f1 = __tmp436;
@@ -130491,7 +130491,7 @@ __LL432: ;
         if (likely(PyDict_Check(__tmp437)))
             __tmp438 = __tmp437;
         else {
-            CPy_TypeError("dict", __tmp437);
+            CPy_TypeError("dict", __tmp437); 
             __tmp438 = NULL;
         }
         cpy_r_r36.f2 = __tmp438;
@@ -130616,7 +130616,7 @@ __LL440: ;
         if (likely(PyTuple_Check(__tmp443)))
             __tmp444 = __tmp443;
         else {
-            CPy_TypeError("tuple", __tmp443);
+            CPy_TypeError("tuple", __tmp443); 
             __tmp444 = NULL;
         }
         cpy_r_r56.f1 = __tmp444;
@@ -130626,7 +130626,7 @@ __LL440: ;
         if (likely(PyDict_Check(__tmp445)))
             __tmp446 = __tmp445;
         else {
-            CPy_TypeError("dict", __tmp445);
+            CPy_TypeError("dict", __tmp445); 
             __tmp446 = NULL;
         }
         cpy_r_r56.f2 = __tmp446;
@@ -135297,7 +135297,7 @@ __LL468: ;
             __tmp471 = NULL;
         }
         if (__tmp471 != NULL) goto __LL472;
-        CPy_TypeError("union[int, str]", __tmp470);
+        CPy_TypeError("union[int, str]", __tmp470); 
         __tmp471 = NULL;
 __LL472: ;
         cpy_r_r70.f0 = __tmp471;
@@ -135312,7 +135312,7 @@ __LL472: ;
         if (likely(PyTuple_Check(__tmp475)))
             __tmp476 = __tmp475;
         else {
-            CPy_TypeError("tuple", __tmp475);
+            CPy_TypeError("tuple", __tmp475); 
             __tmp476 = NULL;
         }
         cpy_r_r70.f2 = __tmp476;
@@ -135322,7 +135322,7 @@ __LL472: ;
         if (likely(PyDict_Check(__tmp477)))
             __tmp478 = __tmp477;
         else {
-            CPy_TypeError("dict", __tmp477);
+            CPy_TypeError("dict", __tmp477); 
             __tmp478 = NULL;
         }
         cpy_r_r70.f3 = __tmp478;
@@ -136157,7 +136157,7 @@ __LL485: ;
         if (likely(PyTuple_Check(__tmp488)))
             __tmp489 = __tmp488;
         else {
-            CPy_TypeError("tuple", __tmp488);
+            CPy_TypeError("tuple", __tmp488); 
             __tmp489 = NULL;
         }
         cpy_r_r69.f1 = __tmp489;
@@ -136167,7 +136167,7 @@ __LL485: ;
         if (likely(PyDict_Check(__tmp490)))
             __tmp491 = __tmp490;
         else {
-            CPy_TypeError("dict", __tmp490);
+            CPy_TypeError("dict", __tmp490); 
             __tmp491 = NULL;
         }
         cpy_r_r69.f2 = __tmp491;
@@ -138530,7 +138530,7 @@ __LL517: ;
         if (likely(PyUnicode_Check(__tmp546)))
             __tmp547 = __tmp546;
         else {
-            CPy_TypeError("str", __tmp546);
+            CPy_TypeError("str", __tmp546); 
             __tmp547 = NULL;
         }
         cpy_r_r98.f14 = __tmp547;
@@ -138540,7 +138540,7 @@ __LL517: ;
         if (likely(PyUnicode_Check(__tmp548)))
             __tmp549 = __tmp548;
         else {
-            CPy_TypeError("str", __tmp548);
+            CPy_TypeError("str", __tmp548); 
             __tmp549 = NULL;
         }
         cpy_r_r98.f15 = __tmp549;
@@ -138771,7 +138771,7 @@ __LL567: ;
         if (likely(PyUnicode_Check(__tmp568)))
             __tmp569 = __tmp568;
         else {
-            CPy_TypeError("str", __tmp568);
+            CPy_TypeError("str", __tmp568); 
             __tmp569 = NULL;
         }
         cpy_r_r140.f0 = __tmp569;
@@ -138781,7 +138781,7 @@ __LL567: ;
         if (likely(PyUnicode_Check(__tmp570)))
             __tmp571 = __tmp570;
         else {
-            CPy_TypeError("str", __tmp570);
+            CPy_TypeError("str", __tmp570); 
             __tmp571 = NULL;
         }
         cpy_r_r140.f1 = __tmp571;
@@ -138918,7 +138918,7 @@ __LL574: ;
         if (likely(PyUnicode_Check(__tmp575)))
             __tmp576 = __tmp575;
         else {
-            CPy_TypeError("str", __tmp575);
+            CPy_TypeError("str", __tmp575); 
             __tmp576 = NULL;
         }
         cpy_r_r167.f0 = __tmp576;
@@ -138928,7 +138928,7 @@ __LL574: ;
         if (likely(PyUnicode_Check(__tmp577)))
             __tmp578 = __tmp577;
         else {
-            CPy_TypeError("str", __tmp577);
+            CPy_TypeError("str", __tmp577); 
             __tmp578 = NULL;
         }
         cpy_r_r167.f1 = __tmp578;
@@ -163333,7 +163333,7 @@ __LL691: ;
         if (likely(PyUnicode_Check(__tmp698)))
             __tmp699 = __tmp698;
         else {
-            CPy_TypeError("str", __tmp698);
+            CPy_TypeError("str", __tmp698); 
             __tmp699 = NULL;
         }
         cpy_r_r158.f3 = __tmp699;
@@ -163422,7 +163422,7 @@ __LL701: ;
         if (likely(PyUnicode_Check(__tmp708)))
             __tmp709 = __tmp708;
         else {
-            CPy_TypeError("str", __tmp708);
+            CPy_TypeError("str", __tmp708); 
             __tmp709 = NULL;
         }
         cpy_r_r164.f3 = __tmp709;
@@ -163531,7 +163531,7 @@ __LL711: ;
         if (likely(PyUnicode_Check(__tmp718)))
             __tmp719 = __tmp718;
         else {
-            CPy_TypeError("str", __tmp718);
+            CPy_TypeError("str", __tmp718); 
             __tmp719 = NULL;
         }
         cpy_r_r178.f3 = __tmp719;
@@ -165298,7 +165298,7 @@ __LL777: ;
         if (likely(PyUnicode_Check(__tmp779)))
             __tmp780 = __tmp779;
         else {
-            CPy_TypeError("str", __tmp779);
+            CPy_TypeError("str", __tmp779); 
             __tmp780 = NULL;
         }
         cpy_r_r620.f0 = __tmp780;
@@ -169011,7 +169011,7 @@ __LL845: ;
         if (likely(PyUnicode_Check(__tmp852)))
             __tmp853 = __tmp852;
         else {
-            CPy_TypeError("str", __tmp852);
+            CPy_TypeError("str", __tmp852); 
             __tmp853 = NULL;
         }
         cpy_r_r47.f3 = __tmp853;
@@ -173893,7 +173893,7 @@ __LL953: ;
             __tmp958 = NULL;
         }
         if (__tmp958 != NULL) goto __LL959;
-        CPy_TypeError("list or None", __tmp957);
+        CPy_TypeError("list or None", __tmp957); 
         __tmp958 = NULL;
 __LL959: ;
         cpy_r_r45.f1 = __tmp958;
@@ -181199,7 +181199,7 @@ __LL1004: ;
         if (likely(PyUnicode_Check(__tmp1011)))
             __tmp1012 = __tmp1011;
         else {
-            CPy_TypeError("str", __tmp1011);
+            CPy_TypeError("str", __tmp1011); 
             __tmp1012 = NULL;
         }
         cpy_r_r120.f3 = __tmp1012;
@@ -183759,7 +183759,7 @@ PyObject *CPyPy_vyper____generate_coverage_data(PyObject *self, PyObject *const 
         arg_source_map_str = NULL;
     }
     if (arg_source_map_str != NULL) goto __LL1077;
-    CPy_TypeError("union[str, dict]", obj_source_map_str);
+    CPy_TypeError("union[str, dict]", obj_source_map_str); 
     goto fail;
 __LL1077: ;
     PyObject *arg_opcodes_str;
@@ -184909,7 +184909,7 @@ __LL1101: ;
         if (likely(PyUnicode_Check(__tmp1102)))
             __tmp1103 = __tmp1102;
         else {
-            CPy_TypeError("str", __tmp1102);
+            CPy_TypeError("str", __tmp1102); 
             __tmp1103 = NULL;
         }
         cpy_r_r26.f0 = __tmp1103;
@@ -184979,7 +184979,7 @@ __LL1109: ;
         if (likely(PyUnicode_Check(__tmp1110)))
             __tmp1111 = __tmp1110;
         else {
-            CPy_TypeError("str", __tmp1110);
+            CPy_TypeError("str", __tmp1110); 
             __tmp1111 = NULL;
         }
         cpy_r_r34.f0 = __tmp1111;
@@ -188214,7 +188214,7 @@ __LL1157: ;
         if (likely(PyUnicode_Check(__tmp1160)))
             __tmp1161 = __tmp1160;
         else {
-            CPy_TypeError("str", __tmp1160);
+            CPy_TypeError("str", __tmp1160); 
             __tmp1161 = NULL;
         }
         cpy_r_r130.f0 = __tmp1161;
@@ -188275,7 +188275,7 @@ __LL1165: ;
             __tmp1171 = NULL;
         }
         if (__tmp1171 != NULL) goto __LL1172;
-        CPy_TypeError("str or None", __tmp1170);
+        CPy_TypeError("str or None", __tmp1170); 
         __tmp1171 = NULL;
 __LL1172: ;
         cpy_r_r130.f2 = __tmp1171;
@@ -188285,7 +188285,7 @@ __LL1172: ;
         if (likely(PyUnicode_Check(__tmp1173)))
             __tmp1174 = __tmp1173;
         else {
-            CPy_TypeError("str", __tmp1173);
+            CPy_TypeError("str", __tmp1173); 
             __tmp1174 = NULL;
         }
         cpy_r_r130.f3 = __tmp1174;
@@ -189150,7 +189150,7 @@ __LL1190: ;
         if (likely(PyUnicode_Check(__tmp1191)))
             __tmp1192 = __tmp1191;
         else {
-            CPy_TypeError("str", __tmp1191);
+            CPy_TypeError("str", __tmp1191); 
             __tmp1192 = NULL;
         }
         cpy_r_r20.f0 = __tmp1192;
@@ -189160,7 +189160,7 @@ __LL1190: ;
         if (likely(PyDict_Check(__tmp1193)))
             __tmp1194 = __tmp1193;
         else {
-            CPy_TypeError("dict", __tmp1193);
+            CPy_TypeError("dict", __tmp1193); 
             __tmp1194 = NULL;
         }
         cpy_r_r20.f1 = __tmp1194;
@@ -190133,7 +190133,7 @@ __LL1214: ;
         if (likely(PyUnicode_Check(__tmp1216)))
             __tmp1217 = __tmp1216;
         else {
-            CPy_TypeError("str", __tmp1216);
+            CPy_TypeError("str", __tmp1216); 
             __tmp1217 = NULL;
         }
         cpy_r_r32.f0 = __tmp1217;
@@ -190185,7 +190185,7 @@ __LL1221: ;
         if (likely(PyUnicode_Check(__tmp1226)))
             __tmp1227 = __tmp1226;
         else {
-            CPy_TypeError("str", __tmp1226);
+            CPy_TypeError("str", __tmp1226); 
             __tmp1227 = NULL;
         }
         cpy_r_r32.f2 = __tmp1227;
@@ -190195,7 +190195,7 @@ __LL1221: ;
         if (likely(PyUnicode_Check(__tmp1228)))
             __tmp1229 = __tmp1228;
         else {
-            CPy_TypeError("str", __tmp1228);
+            CPy_TypeError("str", __tmp1228); 
             __tmp1229 = NULL;
         }
         cpy_r_r32.f3 = __tmp1229;
@@ -190205,7 +190205,7 @@ __LL1221: ;
         if (likely(Py_TYPE(__tmp1230) == CPyType_sources___Sources))
             __tmp1231 = __tmp1230;
         else {
-            CPy_TypeError("brownie.project.sources.Sources", __tmp1230);
+            CPy_TypeError("brownie.project.sources.Sources", __tmp1230); 
             __tmp1231 = NULL;
         }
         cpy_r_r32.f4 = __tmp1231;
@@ -191049,7 +191049,7 @@ __LL1276: ;
         if (likely(PyUnicode_Check(__tmp1313)))
             __tmp1314 = __tmp1313;
         else {
-            CPy_TypeError("str", __tmp1313);
+            CPy_TypeError("str", __tmp1313); 
             __tmp1314 = NULL;
         }
         cpy_r_r60.f18 = __tmp1314;
@@ -191059,7 +191059,7 @@ __LL1276: ;
         if (likely(PyUnicode_Check(__tmp1315)))
             __tmp1316 = __tmp1315;
         else {
-            CPy_TypeError("str", __tmp1315);
+            CPy_TypeError("str", __tmp1315); 
             __tmp1316 = NULL;
         }
         cpy_r_r60.f19 = __tmp1316;
@@ -191069,7 +191069,7 @@ __LL1276: ;
         if (likely(PyUnicode_Check(__tmp1317)))
             __tmp1318 = __tmp1317;
         else {
-            CPy_TypeError("str", __tmp1317);
+            CPy_TypeError("str", __tmp1317); 
             __tmp1318 = NULL;
         }
         cpy_r_r60.f20 = __tmp1318;
@@ -201394,7 +201394,7 @@ __LL1354: ;
         if (likely(PyUnicode_Check(__tmp1355)))
             __tmp1356 = __tmp1355;
         else {
-            CPy_TypeError("str", __tmp1355);
+            CPy_TypeError("str", __tmp1355); 
             __tmp1356 = NULL;
         }
         cpy_r_r27.f0 = __tmp1356;
@@ -201404,7 +201404,7 @@ __LL1354: ;
         if (likely(PyDict_Check(__tmp1357)))
             __tmp1358 = __tmp1357;
         else {
-            CPy_TypeError("dict", __tmp1357);
+            CPy_TypeError("dict", __tmp1357); 
             __tmp1358 = NULL;
         }
         cpy_r_r27.f1 = __tmp1358;
@@ -203813,7 +203813,7 @@ __LL1385: ;
         if (likely(PyDict_Check(__tmp1388)))
             __tmp1389 = __tmp1388;
         else {
-            CPy_TypeError("dict", __tmp1388);
+            CPy_TypeError("dict", __tmp1388); 
             __tmp1389 = NULL;
         }
         cpy_r_r121.f1 = __tmp1389;
@@ -216772,7 +216772,7 @@ PyObject *CPyPy_project___main___new(PyObject *self, PyObject *const *args, size
         arg_project_path_str = NULL;
     }
     if (arg_project_path_str != NULL) goto __LL1420;
-    CPy_TypeError("union[object, str]", obj_project_path_str);
+    CPy_TypeError("union[object, str]", obj_project_path_str); 
     goto fail;
 __LL1420: ;
     char arg_ignore_subfolder;
@@ -233619,7 +233619,7 @@ __LL1480: ;
         if (likely(PyUnicode_Check(__tmp1481)))
             __tmp1482 = __tmp1481;
         else {
-            CPy_TypeError("str", __tmp1481);
+            CPy_TypeError("str", __tmp1481); 
             __tmp1482 = NULL;
         }
         cpy_r_r54.f0 = __tmp1482;
@@ -233629,7 +233629,7 @@ __LL1480: ;
         if (likely(PyUnicode_Check(__tmp1483)))
             __tmp1484 = __tmp1483;
         else {
-            CPy_TypeError("str", __tmp1483);
+            CPy_TypeError("str", __tmp1483); 
             __tmp1484 = NULL;
         }
         cpy_r_r54.f1 = __tmp1484;
@@ -233691,7 +233691,7 @@ __LL1486: ;
         if (likely(PyUnicode_Check(__tmp1487)))
             __tmp1488 = __tmp1487;
         else {
-            CPy_TypeError("str", __tmp1487);
+            CPy_TypeError("str", __tmp1487); 
             __tmp1488 = NULL;
         }
         cpy_r_r63.f0 = __tmp1488;
@@ -233701,7 +233701,7 @@ __LL1486: ;
         if (likely(PyUnicode_Check(__tmp1489)))
             __tmp1490 = __tmp1489;
         else {
-            CPy_TypeError("str", __tmp1489);
+            CPy_TypeError("str", __tmp1489); 
             __tmp1490 = NULL;
         }
         cpy_r_r63.f1 = __tmp1490;
@@ -233764,7 +233764,7 @@ __LL1492: ;
         if (likely(PyUnicode_Check(__tmp1493)))
             __tmp1494 = __tmp1493;
         else {
-            CPy_TypeError("str", __tmp1493);
+            CPy_TypeError("str", __tmp1493); 
             __tmp1494 = NULL;
         }
         cpy_r_r71.f0 = __tmp1494;
@@ -233774,7 +233774,7 @@ __LL1492: ;
         if (likely(PyUnicode_Check(__tmp1495)))
             __tmp1496 = __tmp1495;
         else {
-            CPy_TypeError("str", __tmp1495);
+            CPy_TypeError("str", __tmp1495); 
             __tmp1496 = NULL;
         }
         cpy_r_r71.f1 = __tmp1496;
@@ -233896,7 +233896,7 @@ __LL1500: ;
         if (likely(PyUnicode_Check(__tmp1501)))
             __tmp1502 = __tmp1501;
         else {
-            CPy_TypeError("str", __tmp1501);
+            CPy_TypeError("str", __tmp1501); 
             __tmp1502 = NULL;
         }
         cpy_r_r95.f0 = __tmp1502;
@@ -233906,7 +233906,7 @@ __LL1500: ;
         if (likely(PyUnicode_Check(__tmp1503)))
             __tmp1504 = __tmp1503;
         else {
-            CPy_TypeError("str", __tmp1503);
+            CPy_TypeError("str", __tmp1503); 
             __tmp1504 = NULL;
         }
         cpy_r_r95.f1 = __tmp1504;
@@ -234132,7 +234132,7 @@ __LL1508: ;
         if (likely(PyUnicode_Check(__tmp1509)))
             __tmp1510 = __tmp1509;
         else {
-            CPy_TypeError("str", __tmp1509);
+            CPy_TypeError("str", __tmp1509); 
             __tmp1510 = NULL;
         }
         cpy_r_r150.f0 = __tmp1510;
@@ -234142,7 +234142,7 @@ __LL1508: ;
         if (likely(PyUnicode_Check(__tmp1511)))
             __tmp1512 = __tmp1511;
         else {
-            CPy_TypeError("str", __tmp1511);
+            CPy_TypeError("str", __tmp1511); 
             __tmp1512 = NULL;
         }
         cpy_r_r150.f1 = __tmp1512;
@@ -240641,7 +240641,7 @@ __LL1567: ;
         if (likely(PyUnicode_Check(__tmp1568)))
             __tmp1569 = __tmp1568;
         else {
-            CPy_TypeError("str", __tmp1568);
+            CPy_TypeError("str", __tmp1568); 
             __tmp1569 = NULL;
         }
         cpy_r_r5.f0 = __tmp1569;
@@ -240651,7 +240651,7 @@ __LL1567: ;
         if (likely(PyUnicode_Check(__tmp1570)))
             __tmp1571 = __tmp1570;
         else {
-            CPy_TypeError("str", __tmp1570);
+            CPy_TypeError("str", __tmp1570); 
             __tmp1571 = NULL;
         }
         cpy_r_r5.f1 = __tmp1571;
@@ -243036,7 +243036,7 @@ __LL1598: ;
         if (likely(PyUnicode_Check(__tmp1599)))
             __tmp1600 = __tmp1599;
         else {
-            CPy_TypeError("str", __tmp1599);
+            CPy_TypeError("str", __tmp1599); 
             __tmp1600 = NULL;
         }
         arg_value.f0 = __tmp1600;
@@ -243045,7 +243045,7 @@ __LL1598: ;
         if (likely(PyDict_Check(__tmp1601)))
             __tmp1602 = __tmp1601;
         else {
-            CPy_TypeError("dict", __tmp1601);
+            CPy_TypeError("dict", __tmp1601); 
             __tmp1602 = NULL;
         }
         arg_value.f1 = __tmp1602;
@@ -243615,7 +243615,7 @@ __LL1604: ;
         if (likely(PyUnicode_Check(__tmp1605)))
             __tmp1606 = __tmp1605;
         else {
-            CPy_TypeError("str", __tmp1605);
+            CPy_TypeError("str", __tmp1605); 
             __tmp1606 = NULL;
         }
         cpy_r_r56.f0 = __tmp1606;
@@ -243625,7 +243625,7 @@ __LL1604: ;
         if (likely(PyDict_Check(__tmp1607)))
             __tmp1608 = __tmp1607;
         else {
-            CPy_TypeError("dict", __tmp1607);
+            CPy_TypeError("dict", __tmp1607); 
             __tmp1608 = NULL;
         }
         cpy_r_r56.f1 = __tmp1608;
@@ -245389,7 +245389,7 @@ __LL1615: ;
         if (likely(PyUnicode_Check(__tmp1616)))
             __tmp1617 = __tmp1616;
         else {
-            CPy_TypeError("str", __tmp1616);
+            CPy_TypeError("str", __tmp1616); 
             __tmp1617 = NULL;
         }
         arg_k.f0 = __tmp1617;
@@ -245926,7 +245926,7 @@ __LL1625: ;
         if (likely(Py_TYPE(__tmp1626) == CPyType_project___main___Project))
             __tmp1627 = __tmp1626;
         else {
-            CPy_TypeError("brownie.project.main.Project", __tmp1626);
+            CPy_TypeError("brownie.project.main.Project", __tmp1626); 
             __tmp1627 = NULL;
         }
         cpy_r_r67.f0 = __tmp1627;
@@ -245936,7 +245936,7 @@ __LL1625: ;
         if (likely(PyDict_Check(__tmp1628)))
             __tmp1629 = __tmp1628;
         else {
-            CPy_TypeError("dict", __tmp1628);
+            CPy_TypeError("dict", __tmp1628); 
             __tmp1629 = NULL;
         }
         cpy_r_r67.f1 = __tmp1629;
@@ -246569,7 +246569,7 @@ __LL1638: ;
         if (likely(PyUnicode_Check(__tmp1639)))
             __tmp1640 = __tmp1639;
         else {
-            CPy_TypeError("str", __tmp1639);
+            CPy_TypeError("str", __tmp1639); 
             __tmp1640 = NULL;
         }
         cpy_r_r240.f0 = __tmp1640;
@@ -247449,7 +247449,7 @@ __LL1644: ;
         if (likely(PyUnicode_Check(__tmp1647)))
             __tmp1648 = __tmp1647;
         else {
-            CPy_TypeError("str", __tmp1647);
+            CPy_TypeError("str", __tmp1647); 
             __tmp1648 = NULL;
         }
         cpy_r_r11.f1 = __tmp1648;
@@ -249721,7 +249721,7 @@ PyObject *CPyPy_test___output____split(PyObject *self, PyObject *const *args, si
     if (likely(PyList_Check(obj_coverage_eval)))
         arg_coverage_eval = obj_coverage_eval;
     else {
-        CPy_TypeError("list", obj_coverage_eval);
+        CPy_TypeError("list", obj_coverage_eval); 
         goto fail;
     }
     PyObject *arg_coverage_map;
@@ -249965,7 +249965,7 @@ __LL1659: ;
         if (likely(PyList_Check(__tmp1660)))
             __tmp1661 = __tmp1660;
         else {
-            CPy_TypeError("list", __tmp1660);
+            CPy_TypeError("list", __tmp1660); 
             __tmp1661 = NULL;
         }
         cpy_r_r35.f0 = __tmp1661;
@@ -249975,7 +249975,7 @@ __LL1659: ;
         if (likely(PyList_Check(__tmp1662)))
             __tmp1663 = __tmp1662;
         else {
-            CPy_TypeError("list", __tmp1662);
+            CPy_TypeError("list", __tmp1662); 
             __tmp1663 = NULL;
         }
         cpy_r_r35.f1 = __tmp1663;
@@ -249985,7 +249985,7 @@ __LL1659: ;
         if (likely(PyList_Check(__tmp1664)))
             __tmp1665 = __tmp1664;
         else {
-            CPy_TypeError("list", __tmp1664);
+            CPy_TypeError("list", __tmp1664); 
             __tmp1665 = NULL;
         }
         cpy_r_r35.f2 = __tmp1665;
@@ -250473,7 +250473,7 @@ __LL1674: ;
         if (likely(PyList_Check(__tmp1675)))
             __tmp1676 = __tmp1675;
         else {
-            CPy_TypeError("list", __tmp1675);
+            CPy_TypeError("list", __tmp1675); 
             __tmp1676 = NULL;
         }
         cpy_r_r39.f0 = __tmp1676;
@@ -250483,7 +250483,7 @@ __LL1674: ;
         if (likely(PyList_Check(__tmp1677)))
             __tmp1678 = __tmp1677;
         else {
-            CPy_TypeError("list", __tmp1677);
+            CPy_TypeError("list", __tmp1677); 
             __tmp1678 = NULL;
         }
         cpy_r_r39.f1 = __tmp1678;
@@ -250493,7 +250493,7 @@ __LL1674: ;
         if (likely(PyList_Check(__tmp1679)))
             __tmp1680 = __tmp1679;
         else {
-            CPy_TypeError("list", __tmp1679);
+            CPy_TypeError("list", __tmp1679); 
             __tmp1680 = NULL;
         }
         cpy_r_r39.f2 = __tmp1680;
@@ -254874,7 +254874,7 @@ __LL1698: ;
         if (likely(PyUnicode_Check(__tmp1699)))
             __tmp1700 = __tmp1699;
         else {
-            CPy_TypeError("str", __tmp1699);
+            CPy_TypeError("str", __tmp1699); 
             __tmp1700 = NULL;
         }
         arg_member.f0 = __tmp1700;
@@ -255253,7 +255253,7 @@ __LL1707: ;
         if (likely(PyUnicode_Check(__tmp1708)))
             __tmp1709 = __tmp1708;
         else {
-            CPy_TypeError("str", __tmp1708);
+            CPy_TypeError("str", __tmp1708); 
             __tmp1709 = NULL;
         }
         cpy_r_r31.f0 = __tmp1709;
@@ -255360,7 +255360,7 @@ __LL1713: ;
         if (likely(PyUnicode_Check(__tmp1714)))
             __tmp1715 = __tmp1714;
         else {
-            CPy_TypeError("str", __tmp1714);
+            CPy_TypeError("str", __tmp1714); 
             __tmp1715 = NULL;
         }
         cpy_r_r59.f0 = __tmp1715;
