@@ -25,6 +25,7 @@ import eth_event
 from eth_event import EventError
 from eth_event.main import DecodedEvent, NonDecodedEvent, TopicMapData, _TraceStep
 from eth_typing import ABIElement, AnyAddress, ChecksumAddress, HexStr
+from mypy_extensions import mypyc_attr
 from ujson import JSONDecodeError
 from web3._utils import filters
 from web3.datastructures import AttributeDict
@@ -267,7 +268,7 @@ Events: TypeAlias = _EventItem[Event]
 """An _EventItem which represents a collection of events which share the same event name."""
 
 
-@final
+@mypyc_attr(allow_interpreted_subclasses=True)
 class _EventWatchData:
     """
     Class containing the data needed to check, time, and execute callbacks on a specified event.

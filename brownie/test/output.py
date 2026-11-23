@@ -60,11 +60,12 @@ def _load_report_exclude_data(settings: dict[str, Any]) -> tuple[list[str], list
                     BrownieConfigWarning,
                 )
 
-    exclude_contracts = []
-    if settings["exclude_contracts"]:
-        exclude_contracts = settings["exclude_contracts"]
-        if not isinstance(exclude_contracts, list):
-            exclude_contracts = [exclude_contracts]
+    exclude_contracts: list[Any] = []
+    contract_setting = settings["exclude_contracts"]
+    if contract_setting:
+        exclude_contracts = (
+            contract_setting if isinstance(contract_setting, list) else [contract_setting]
+        )
 
     return exclude_paths, exclude_contracts
 

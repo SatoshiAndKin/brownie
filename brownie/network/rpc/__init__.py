@@ -163,26 +163,35 @@ class Rpc(metaclass=_Singleton):
             return False
         return self.process.parent() == psutil.Process()
 
-    @internal
-    def sleep(self, seconds: int) -> int:
+    def _sleep(self, seconds: int) -> int:
         return self.backend.sleep(seconds)
 
     @internal
-    def mine(self, timestamp: int = None) -> int:
+    def sleep(self, seconds: int) -> int:
+        return self._sleep(seconds)
+
+    def _mine(self, timestamp: int | None = None) -> int:
         self.backend.mine(timestamp)
         return web3.eth.block_number
 
-    def _snapshot(self) -> int:
+    @internal
+    def mine(self, timestamp: int | None = None) -> int:
+        return self._mine(timestamp)
+
+    def _snapshot(self) -> int | str:
         return self.backend.snapshot()
 
     @internal
-    def snapshot(self) -> int:
+    def snapshot(self) -> int | str:
         return self._snapshot()
 
-    @internal
-    def revert(self, snapshot_id: int) -> int:
+    def _revert(self, snapshot_id: int | str) -> int:
         self.backend.revert(snapshot_id)
         return web3.eth.block_number
+
+    @internal
+    def revert(self, snapshot_id: int | str) -> int:
+        return self._revert(snapshot_id)
 
     def unlock_account(self, address: str) -> None:
         self.backend.unlock_account(address)

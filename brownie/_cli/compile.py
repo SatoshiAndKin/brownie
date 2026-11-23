@@ -49,7 +49,7 @@ def main():
             if path.exists():
                 path.unlink()
 
-    proj = project.load()
+    proj = getattr(project, "load")()
 
     if args["--size"]:
         print("============ Deployment Bytecode Sizes ============")

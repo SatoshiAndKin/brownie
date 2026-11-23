@@ -28,5 +28,5 @@ tests/                  Scripts for project testing
 
 def main():
     args = docopt(__doc__)
-    path = project.new(args["<path>"] or ".", args["--force"], args["--force"])
+    path = getattr(project, "new")(args["<path>"] or ".", args["--force"], args["--force"])
     notify("SUCCESS", f"A new Brownie project has been initialized at {path}")

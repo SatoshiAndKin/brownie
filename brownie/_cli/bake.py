@@ -23,5 +23,5 @@ For a complete list of Brownie mixes visit https://www.github.com/brownie-mix
 
 def main():
     args = docopt(__doc__)
-    path = project.from_brownie_mix(args["<mix>"], args["<path>"], args["--force"])
+    path = getattr(project, "from_brownie_mix")(args["<mix>"], args["<path>"], args["--force"])
     notify("SUCCESS", f"Brownie mix '{args['<mix>']}' has been initiated at {path}")

@@ -2,22 +2,29 @@
 
 import threading
 
+import pytest
+
+from brownie._config import CONFIG
 from brownie.network.middlewares.caching import RequestCachingMiddleware
 
 
-class _DisconnectedWeb3:
-    def isConnected(self):
-        return False
+@pytest.fixture
+def middleware(accounts, web3, monkeypatch):
+    monkeypatch.setitem(CONFIG.active_network, "chainid", web3.eth.chain_id)
+    instance = RequestCachingMiddleware(web3)
+    instance.uninstall()
+    monkeypatch.setattr(web3, "isConnected", lambda: False)
+    instance.is_killed = False
+    instance.event.clear()
+    instance._stop_event.clear()
+    instance.block_cache.clear()
+    yield instance
+    instance.uninstall()
+    instance.cur.close()
 
 
-def test_uninstall_stops_waiting_filter_thread():
-    middleware = object.__new__(RequestCachingMiddleware)
-    middleware.is_killed = False
-    middleware.event = threading.Event()
-    middleware._stop_event = threading.Event()
-    middleware.block_cache = {"block": {}}
-    middleware.block_filter = object()
-    middleware.w3 = _DisconnectedWeb3()
+def test_uninstall_stops_waiting_filter_thread(middleware):
+    middleware.block_cache["block"] = {}
 
     started = threading.Event()
 
@@ -39,15 +46,8 @@ def test_uninstall_stops_waiting_filter_thread():
     assert not middleware.loop_thread.is_alive()
 
 
-def test_uninstall_does_not_join_current_thread():
-    middleware = object.__new__(RequestCachingMiddleware)
-    middleware.is_killed = False
-    middleware.event = threading.Event()
-    middleware._stop_event = threading.Event()
-    middleware.block_cache = {}
-    middleware.block_filter = None
+def test_uninstall_does_not_join_current_thread(middleware):
     middleware.loop_thread = threading.current_thread()
-    middleware.w3 = _DisconnectedWeb3()
 
     middleware.uninstall()
 
@@ -56,15 +56,11 @@ def test_uninstall_does_not_join_current_thread():
     assert middleware.event.is_set()
 
 
-def test_loop_exception_handler_releases_startup_waiters():
-    middleware = object.__new__(RequestCachingMiddleware)
-    middleware.event = threading.Event()
-    middleware.is_killed = False
-
-    def raise_before_initialization():
+def test_loop_exception_handler_releases_startup_waiters(middleware, web3, monkeypatch):
+    def raise_before_initialization(*args, **kwargs):
         raise RuntimeError("boom")
 
-    middleware.block_filter_loop = raise_before_initialization
+    monkeypatch.setattr(web3.eth, "get_block", raise_before_initialization)
 
     middleware.loop_exception_handler()
 
