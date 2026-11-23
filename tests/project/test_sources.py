@@ -86,6 +86,8 @@ def test_get_pragma_spec():
     [
         ("0.1.0b16", NpmSpec("0.1.0-beta.16")),
         ("0.1.0Beta17", NpmSpec("0.1.0-beta.17")),
+        ("0.1.0a1", NpmSpec("0.1.0-alpha.1")),
+        ("0.1.0rc1", NpmSpec("0.1.0-rc.1")),
         ("^0.2.0", NpmSpec("^0.2.0")),
         ("<=0.2.4", NpmSpec("<=0.2.4")),
     ],

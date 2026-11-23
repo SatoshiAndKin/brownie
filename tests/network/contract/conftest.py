@@ -19,6 +19,9 @@ class MockExplorerResponse:
     def json(self) -> dict[str, Any]:
         return self._data
 
+    def close(self) -> None:
+        pass
+
 
 class MockExplorer:
     def __init__(self, monkeypatch: pytest.MonkeyPatch) -> None:

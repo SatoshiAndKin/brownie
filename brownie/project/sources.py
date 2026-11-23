@@ -247,7 +247,18 @@ def get_vyper_pragma_spec(source: str, path: str | None = None) -> semantic_vers
     try:
         # special case for Vyper 0.1.0-beta.X
         version = to_vyper_version(pragma_string)
-        return NpmSpec(str(version))
+        prerelease: tuple[str, ...] = ()
+        if version.pre is not None:
+            label, number = version.pre
+            labels = {"a": "alpha", "b": "beta", "rc": "rc"}
+            prerelease = (labels[label], str(number))
+        normalized = semantic_version.Version(
+            major=version.major,
+            minor=version.minor,
+            patch=version.micro,
+            prerelease=prerelease,
+        )
+        return NpmSpec(str(normalized))
     except Exception:
         pass
 

@@ -9,6 +9,7 @@ to load any plugins.
 """
 
 import sys
+from pathlib import Path
 from typing import Any, NewType
 
 import eth_typing
@@ -19,5 +20,14 @@ if not hasattr(eth_typing, "ContractName"):
     eth_typing.ContractName = NewType("ContractName", str)
     eth_typing.Manifest = NewType("Manifest", dict[str, Any])
 
-# Now run pytest, forwarding all CLI arguments
+# Load Brownie from the installed wheel before pytest imports checkout fixtures.
+source_root = Path(__file__).resolve().parent
+sys.path[:] = [entry for entry in sys.path if Path(entry or ".").resolve() != source_root]
+
+import brownie  # noqa: E402
+
+if Path(brownie.__file__).resolve().is_relative_to(source_root / "brownie"):
+    raise RuntimeError("Tests must use the installed Brownie wheel")
+
+# Now run pytest, forwarding all CLI arguments.
 sys.exit(pytest.main(sys.argv[1:]))
