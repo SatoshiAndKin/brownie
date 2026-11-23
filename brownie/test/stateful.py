@@ -27,7 +27,7 @@ class _BrownieStateMachine:
 
     def __init__(self: Any) -> None:
         brownie.chain.revert()
-        sf.RuleBasedStateMachine.__init__(self)  # type: ignore [arg-type]
+        sf.RuleBasedStateMachine.__init__(self)
 
         # pytest capturemanager plugin, added when accessed via the state_manager fixture
         if capman := self._capman:
