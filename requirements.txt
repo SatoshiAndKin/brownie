@@ -16,7 +16,7 @@ attrs==26.1.0
     # via
     #   aiohttp
     #   hypothesis
-bitarray==3.12.3
+bitarray==3.12.4
     # via eth-account
 cbor2==5.9.0
     # via vyper
@@ -159,7 +159,7 @@ pycryptodome==3.24.1
     #   eth-hash
     #   eth-keyfile
     #   vyper
-pydantic==2.14.2
+pydantic==2.14.3
     # via
     #   eip712
     #   eth-account
@@ -167,7 +167,7 @@ pydantic==2.14.2
     #   eth-utils
     #   faster-eth-utils
     #   web3
-pydantic-core==2.50.2
+pydantic-core==2.50.4
     # via pydantic
 pygments==2.21.0
     # via
@@ -183,7 +183,9 @@ pyunormalize==18.0.0
 pywin32==312 ; sys_platform == 'win32'
     # via web3
 pyyaml==6.0.3
-regex==2026.9.29
+regex==2026.9.29 ; python_full_version < '3.11'
+    # via parsimonious
+regex==2026.11.15 ; python_full_version >= '3.11'
     # via parsimonious
 requests==2.34.2
     # via
@@ -223,9 +225,9 @@ typing-extensions==4.16.0
     #   pydantic-core
     #   typing-inspection
     #   web3
-typing-inspection==0.4.4
+typing-inspection==0.4.5
     # via pydantic
-ujson==6.0.0
+ujson==6.1.0
 urllib3==2.8.0
     # via
     #   requests
