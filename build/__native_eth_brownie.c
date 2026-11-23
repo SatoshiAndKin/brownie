@@ -112216,7 +112216,7 @@ CPyL3: ;
     if (!cpy_r_r7) goto CPyL21;
     cpy_r_r8 = CPy_GetExcValue();
     cpy_r_exc = cpy_r_r8;
-    cpy_r_r9 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_call', 'eth_estimateGas'}) */
+    cpy_r_r9 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_estimateGas', 'eth_call'}) */
     cpy_r_r10 = PySet_Contains(cpy_r_r9, cpy_r_method);
     cpy_r_r11 = cpy_r_r10 >= 0;
     if (unlikely(!cpy_r_r11)) {
@@ -112332,7 +112332,7 @@ CPyL21: ;
     if (!cpy_r_r32) goto CPyL39;
     cpy_r_r33 = CPy_GetExcValue();
     cpy_r_exc = cpy_r_r33;
-    cpy_r_r34 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_call', 'eth_estimateGas'}) */
+    cpy_r_r34 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_estimateGas', 'eth_call'}) */
     cpy_r_r35 = PySet_Contains(cpy_r_r34, cpy_r_method);
     cpy_r_r36 = cpy_r_r35 >= 0;
     if (unlikely(!cpy_r_r36)) {
@@ -112438,7 +112438,7 @@ CPyL41: ;
     if (!cpy_r_r57) goto CPyL54;
     CPy_Unreachable();
 CPyL43: ;
-    cpy_r_r58 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_call', 'eth_estimateGas'}) */
+    cpy_r_r58 = CPyStatics[DIFFCHECK_PLACEHOLDER]; /* frozenset({'eth_estimateGas', 'eth_call'}) */
     cpy_r_r59 = PySet_Contains(cpy_r_r58, cpy_r_method);
     cpy_r_r60 = cpy_r_r59 >= 0;
     if (unlikely(!cpy_r_r60)) {
@@ -239928,7 +239928,7 @@ __LL1562: ;
         if (likely(PyUnicode_Check(__tmp1565)))
             __tmp1566 = __tmp1565;
         else {
-            CPy_TypeError("str", __tmp1565);
+            CPy_TypeError("str", __tmp1565); 
             __tmp1566 = NULL;
         }
         cpy_r_r5.f1 = __tmp1566;
@@ -242305,7 +242305,7 @@ __LL1593: ;
         if (likely(PyUnicode_Check(__tmp1594)))
             __tmp1595 = __tmp1594;
         else {
-            CPy_TypeError("str", __tmp1594);
+            CPy_TypeError("str", __tmp1594); 
             __tmp1595 = NULL;
         }
         arg_value.f0 = __tmp1595;
@@ -242314,7 +242314,7 @@ __LL1593: ;
         if (likely(PyDict_Check(__tmp1596)))
             __tmp1597 = __tmp1596;
         else {
-            CPy_TypeError("dict", __tmp1596);
+            CPy_TypeError("dict", __tmp1596); 
             __tmp1597 = NULL;
         }
         arg_value.f1 = __tmp1597;
@@ -242884,7 +242884,7 @@ __LL1599: ;
         if (likely(PyUnicode_Check(__tmp1600)))
             __tmp1601 = __tmp1600;
         else {
-            CPy_TypeError("str", __tmp1600);
+            CPy_TypeError("str", __tmp1600); 
             __tmp1601 = NULL;
         }
         cpy_r_r56.f0 = __tmp1601;
@@ -242894,7 +242894,7 @@ __LL1599: ;
         if (likely(PyDict_Check(__tmp1602)))
             __tmp1603 = __tmp1602;
         else {
-            CPy_TypeError("dict", __tmp1602);
+            CPy_TypeError("dict", __tmp1602); 
             __tmp1603 = NULL;
         }
         cpy_r_r56.f1 = __tmp1603;
@@ -244658,7 +244658,7 @@ __LL1610: ;
         if (likely(PyUnicode_Check(__tmp1611)))
             __tmp1612 = __tmp1611;
         else {
-            CPy_TypeError("str", __tmp1611);
+            CPy_TypeError("str", __tmp1611); 
             __tmp1612 = NULL;
         }
         arg_k.f0 = __tmp1612;
@@ -245195,7 +245195,7 @@ __LL1620: ;
         if (likely(Py_TYPE(__tmp1621) == CPyType_project___main___Project))
             __tmp1622 = __tmp1621;
         else {
-            CPy_TypeError("brownie.project.main.Project", __tmp1621);
+            CPy_TypeError("brownie.project.main.Project", __tmp1621); 
             __tmp1622 = NULL;
         }
         cpy_r_r67.f0 = __tmp1622;
@@ -245205,7 +245205,7 @@ __LL1620: ;
         if (likely(PyDict_Check(__tmp1623)))
             __tmp1624 = __tmp1623;
         else {
-            CPy_TypeError("dict", __tmp1623);
+            CPy_TypeError("dict", __tmp1623); 
             __tmp1624 = NULL;
         }
         cpy_r_r67.f1 = __tmp1624;
@@ -245838,7 +245838,7 @@ __LL1633: ;
         if (likely(PyUnicode_Check(__tmp1634)))
             __tmp1635 = __tmp1634;
         else {
-            CPy_TypeError("str", __tmp1634);
+            CPy_TypeError("str", __tmp1634); 
             __tmp1635 = NULL;
         }
         cpy_r_r240.f0 = __tmp1635;
@@ -246718,7 +246718,7 @@ __LL1639: ;
         if (likely(PyUnicode_Check(__tmp1642)))
             __tmp1643 = __tmp1642;
         else {
-            CPy_TypeError("str", __tmp1642);
+            CPy_TypeError("str", __tmp1642); 
             __tmp1643 = NULL;
         }
         cpy_r_r11.f1 = __tmp1643;
@@ -249260,7 +249260,7 @@ __LL1654: ;
         if (likely(PyList_Check(__tmp1659)))
             __tmp1660 = __tmp1659;
         else {
-            CPy_TypeError("list", __tmp1659);
+            CPy_TypeError("list", __tmp1659); 
             __tmp1660 = NULL;
         }
         cpy_r_r35.f2 = __tmp1660;
@@ -249768,7 +249768,7 @@ __LL1669: ;
         if (likely(PyList_Check(__tmp1674)))
             __tmp1675 = __tmp1674;
         else {
-            CPy_TypeError("list", __tmp1674);
+            CPy_TypeError("list", __tmp1674); 
             __tmp1675 = NULL;
         }
         cpy_r_r39.f2 = __tmp1675;
@@ -254166,7 +254166,7 @@ __LL1693: ;
         if (likely(PyUnicode_Check(__tmp1694)))
             __tmp1695 = __tmp1694;
         else {
-            CPy_TypeError("str", __tmp1694);
+            CPy_TypeError("str", __tmp1694); 
             __tmp1695 = NULL;
         }
         arg_member.f0 = __tmp1695;
@@ -254545,7 +254545,7 @@ __LL1702: ;
         if (likely(PyUnicode_Check(__tmp1703)))
             __tmp1704 = __tmp1703;
         else {
-            CPy_TypeError("str", __tmp1703);
+            CPy_TypeError("str", __tmp1703); 
             __tmp1704 = NULL;
         }
         cpy_r_r31.f0 = __tmp1704;
@@ -254652,7 +254652,7 @@ __LL1708: ;
         if (likely(PyUnicode_Check(__tmp1709)))
             __tmp1710 = __tmp1709;
         else {
-            CPy_TypeError("str", __tmp1709);
+            CPy_TypeError("str", __tmp1709); 
             __tmp1710 = NULL;
         }
         cpy_r_r59.f0 = __tmp1710;
@@ -277791,10 +277791,10 @@ const char * const CPyLit_Str[] = {
     "\004\002w3\020load_middlewares\"brownie.network.middlewares._setup\f_middlewares",
     "\005\tbytearray\bget_code\006latest\bcache.db\033CREATE TABLE IF NOT EXISTS ",
     "\004\031 (method, params, result)\005clear\026loop_exception_handler\reager_caching",
-    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\030eth_getTransactionByHash",
-    "\004\beth_sign\veth_chainId\023eth_signTransaction\023eth_sendTransaction",
-    "\003\023eth_uninstallFilter\022web3_clientVersion\031eth_getTransactionReceipt",
-    "\003\022eth_newBlockFilter\026eth_sendRawTransaction\024eth_getFilterChanges",
+    "\006\tget_block\ttimestamp\006number\vblock_cache\004hash\023eth_sendTransaction",
+    "\004\024eth_getFilterChanges\beth_sign\023eth_signTransaction\022web3_clientVersion",
+    "\003\023eth_uninstallFilter\030eth_getTransactionByHash\022eth_newBlockFilter",
+    "\003\veth_chainId\026eth_sendRawTransaction\031eth_getTransactionReceipt",
     "\004\nseparators\023SELECT result FROM \034 WHERE method=\? AND params=\?\amaxsize",
     "\a\ajsonrpc\0032.0\006result\nsetdefault\fblock_filter\visConnected\tfilter_id",
     "\003\020uninstall_filter\vloop_thread\016current_thread",
@@ -277802,8 +277802,8 @@ const char * const CPyLit_Str[] = {
     "\003\021brownie.utils.sql\veth_getCode\016LONGTERM_CACHE",
     "\002 CACHE_FILTER_THREAD_JOIN_TIMEOUT#brownie.network.middlewares.caching",
     "\a\ttable_key\003cur\004lock\v_stop_event\tis_killed\nlast_block\017last_block_seen",
-    "\004\flast_request\030RequestCachingMiddleware\fWeb3RPCError\beth_call",
-    "\005\017eth_estimateGas\frpc_response\005error\022ContractLogicError\017web3.exceptions",
+    "\004\flast_request\030RequestCachingMiddleware\fWeb3RPCError\017eth_estimateGas",
+    "\005\beth_call\frpc_response\005error\022ContractLogicError\017web3.exceptions",
     "\002+brownie.network.middlewares.catch_tx_revert\031TxRevertCatcherMiddleware",
     "\005\016client_version\nganache/v7\016programCounter\017program_counter\fVM Exception",
     "\004\006revert\006reason$brownie.network.middlewares.ganache7\022Ganache7MiddleWare",
@@ -278161,8 +278161,8 @@ const int CPyLit_Tuple[] = {
 };
 const int CPyLit_FrozenSet[] = {
     7, 3, 670, 469, 671, 3, 470, 672, 673, 11, 1044, 1045, 1046, 1047,
-    1048, 1049, 1050, 1051, 1052, 1053, 1054, 2, 1087, 1088, 2, 1053,
-    1048, 3, 1053, 1087, 1048, 2, 2090, 2091
+    1048, 1049, 1050, 1051, 1052, 1053, 1054, 2, 1087, 1088, 2, 1044,
+    1053, 3, 1044, 1053, 1088, 2, 2090, 2091
 };
 CPyModule *CPyModule_brownie____c_constants__internal = NULL;
 CPyModule *CPyModule_brownie____c_constants;
