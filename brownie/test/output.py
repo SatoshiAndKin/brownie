@@ -227,7 +227,7 @@ def _get_totals(
 
 def _split_by_fn(
     build: Build,
-    coverage_eval: dict[ContractName, dict[str, dict[int, set[int]]]],
+    coverage_eval: CoverageEval,
 ) -> dict[ContractName, dict[str, dict[str, tuple[list[int], list[int], list[int]]]]]:
     # Splits a coverage eval dict so that coverage indexes are stored by function.
     results: dict[ContractName, dict[str, dict[str, Any]]] = {
@@ -243,7 +243,7 @@ def _split_by_fn(
 
 
 def _split(
-    coverage_eval: dict[int, set[int]],
+    coverage_eval: list[set[int]],
     coverage_map: CoverageMap,
     key: str,
 ) -> dict[str, tuple[list[int], list[int], list[int]]]:
