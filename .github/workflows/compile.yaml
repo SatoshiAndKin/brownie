@@ -33,6 +33,9 @@ permissions:
 jobs:
   compile:
     runs-on: ubuntu-latest
+    env:
+      # Keep generated frozenset constants stable across source rebuilds.
+      PYTHONHASHSEED: "0"
 
     steps:
     - name: Checkout code
