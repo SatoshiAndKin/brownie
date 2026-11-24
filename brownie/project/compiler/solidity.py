@@ -238,10 +238,12 @@ def find_best_solc_version(
     available_versions: VersionList
     installed_versions: VersionList
 
+    pragma_specs = [
+        sources.get_pragma_spec(source, path) for path, source in contract_sources.items()
+    ]
     available_versions, installed_versions = _get_solc_version_list()
 
-    for path, source in contract_sources.items():
-        pragma_spec = sources.get_pragma_spec(source, path)
+    for pragma_spec in pragma_specs:
         installed_versions = [i for i in installed_versions if i in pragma_spec]
         available_versions = [i for i in available_versions if i in pragma_spec]
 

@@ -3,7 +3,7 @@
 import sys
 from inspect import getmembers
 from types import FunctionType
-from typing import Any, ClassVar, Final, final
+from typing import Any, ClassVar, Final
 
 from hypothesis import settings as hp_settings
 from hypothesis import stateful as sf
@@ -19,16 +19,15 @@ sf.__tracebackhide__ = True  # type: ignore [attr-defined]
 marker: Final = deque("-/|\\-/|\\")
 
 
-@final
 @mypyc_attr(native_class=False)
 class _BrownieStateMachine:
 
     _failed: ClassVar[bool] = False
     _capman: ClassVar[Any] = None
 
-    def __init__(self) -> None:
+    def __init__(self: Any) -> None:
         brownie.chain.revert()
-        sf.RuleBasedStateMachine.__init__(self)  # type: ignore [arg-type]
+        sf.RuleBasedStateMachine.__init__(self)
 
         # pytest capturemanager plugin, added when accessed via the state_manager fixture
         if capman := self._capman:
@@ -41,14 +40,14 @@ class _BrownieStateMachine:
         if hasattr(self, "setup"):
             self.setup()
 
-    def execute_step(self, step) -> None:
+    def execute_step(self: Any, step) -> None:
         try:
             super().execute_step(step)  # type: ignore [misc]
         except Exception:
             type(self)._failed = True
             raise
 
-    def check_invariants(self, settings) -> None:
+    def check_invariants(self: Any, settings) -> None:
         try:
             super().check_invariants(settings)  # type: ignore [misc]
         except Exception:
@@ -69,7 +68,7 @@ def _attr_filter(attr: str, pattern: str) -> bool:
     return attr == pattern or attr.startswith(f"{pattern}_")
 
 
-def _generate_state_machine(rules_object: type) -> type[_BrownieStateMachine]:
+def _generate_state_machine(rules_object: type) -> type:
 
     bases = (_BrownieStateMachine, rules_object, sf.RuleBasedStateMachine)
     machine = type("BrownieStateMachine", bases, {})

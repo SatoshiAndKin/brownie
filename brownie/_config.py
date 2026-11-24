@@ -4,7 +4,7 @@ import pathlib
 import shutil
 import sys
 import warnings
-from typing import Any, DefaultDict, Final, Literal, NewType, TypeAlias, final
+from typing import Any, DefaultDict, Final, Literal, NewType, TypeAlias, cast, final
 
 import yaml
 from dotenv import dotenv_values, load_dotenv
@@ -352,7 +352,8 @@ def _update_argv_from_docopt(args: dict[str, Any]) -> None:
 
 
 def _get_data_folder() -> pathlib.Path:
-    return DATA_FOLDER
+    # Module-level overrides must also reach callers compiled with mypyc.
+    return cast(pathlib.Path, globals()["DATA_FOLDER"])
 
 
 def _make_data_folders(data_folder: pathlib.Path) -> None:

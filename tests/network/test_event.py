@@ -8,14 +8,17 @@ from threading import Lock, Thread
 import pytest
 from web3.datastructures import AttributeDict
 from web3.exceptions import ABIEventNotFound
+from web3.providers.rpc import HTTPProvider
 
 from brownie import Contract, compile_source
 from brownie.exceptions import EventLookupError
 from brownie.network.event import (
+    _WATCHER_THREAD_JOIN_TIMEOUT,
     EventDict,
     EventWatcher,
     _create_event_filter,
     _EventItem,
+    _EventWatchData,
     _is_provider_teardown_error,
     event_watcher,
 )
@@ -42,7 +45,7 @@ def wait_for_no_callback(callback_event: ThreadEvent, timeout: float = 0.2) -> N
     assert callback_event.wait(timeout) is False
 
 
-class _BlockingEventWatchData:
+class _BlockingEventWatchData(_EventWatchData):
     delay = 0.05
 
     def __init__(self, events=None):
@@ -59,7 +62,7 @@ class _BlockingEventWatchData:
 
     def get_new_events(self):
         self.poll_started.set()
-        self.release_poll.wait(1.0)
+        self.release_poll.wait(5.0)
         return self.events
 
     def reset_timer(self):
@@ -132,7 +135,7 @@ def test_provider_teardown_error_detection_is_narrow(monkeypatch):
     assert _is_provider_teardown_error(teardown_error) is True
     assert _is_provider_teardown_error(AttributeError("unrelated")) is False
 
-    monkeypatch.setattr("brownie.network.event.web3.provider", object())
+    monkeypatch.setattr("brownie.network.event.web3.provider", HTTPProvider("http://localhost"))
     assert _is_provider_teardown_error(teardown_error) is False
 
 
@@ -452,13 +455,12 @@ class TestEventWatcher:
         old_thread = None
         try:
             old_thread = start_watcher_with_target(event_watcher_instance, watch_data)
-            monkeypatch.setattr("brownie.network.event._WATCHER_THREAD_JOIN_TIMEOUT", 0.01)
 
             start_time = time.time()
             with pytest.warns(RuntimeWarning, match="Event watcher thread did not exit"):
                 event_watcher_instance.stop(wait=True)
 
-            assert time.time() - start_time < 0.5
+            assert time.time() - start_time < _WATCHER_THREAD_JOIN_TIMEOUT + 0.5
         finally:
             if old_thread is not None:
                 release_and_join_watcher(watch_data, old_thread)
@@ -514,7 +516,6 @@ class TestEventWatcher:
         fresh_thread = None
         try:
             old_thread = start_watcher_with_target(event_watcher_instance, watch_data)
-            monkeypatch.setattr("brownie.network.event._WATCHER_THREAD_JOIN_TIMEOUT", 0.01)
 
             with pytest.warns(RuntimeWarning, match="Event watcher thread did not exit"):
                 event_watcher_instance.reset()

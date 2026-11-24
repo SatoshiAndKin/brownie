@@ -3,7 +3,7 @@
 import time
 from collections.abc import Callable
 from threading import Thread
-from typing import Final
+from typing import Any, Final
 
 from mypy_extensions import mypyc_attr
 
@@ -35,7 +35,7 @@ class Alert:
         delay: float = 2,
         msg: str | None = None,
         callback: Callable | None = None,
-        repeat: bool = False,
+        repeat: int | bool = False,
     ) -> None:
         """Creates a new Alert.
         Args:
@@ -75,10 +75,10 @@ class Alert:
         fn: Callable,
         args: tuple,
         kwargs: dict,
-        start_value: int,
+        start_value: Any,
         delay: float,
-        msg: str,
-        callback: Callable,
+        msg: str | None,
+        callback: Callable | None,
         repeat: int | bool | None = False,
     ) -> None:
         try:
@@ -109,7 +109,7 @@ class Alert:
         """Checks if the alert is currently active."""
         return self._thread.is_alive()
 
-    def wait(self, timeout: int | None = None) -> None:
+    def wait(self, timeout: float | None = None) -> None:
         """Waits for the alert to fire.
         Args:
             timeout: Number of seconds to wait. If None, will wait indefinitely."""
@@ -135,7 +135,7 @@ def new(
     delay: float = 0.5,
     msg: str | None = None,
     callback: Callable | None = None,
-    repeat: bool = False,
+    repeat: int | bool = False,
 ) -> "Alert":
     """Alias for creating a new Alert instance."""
     return Alert(fn, args, kwargs, delay, msg, callback, repeat)

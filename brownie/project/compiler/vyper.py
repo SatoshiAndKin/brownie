@@ -124,7 +124,7 @@ def _get_vyper_version_list() -> tuple[VersionList, VersionList]:
     return AVAILABLE_VYPER_VERSIONS, installed_versions
 
 
-def install_vyper(*versions: str) -> None:
+def install_vyper(*versions: VersionSpec) -> None:
     """Installs vyper versions."""
     for version in versions:
         _vvm_install_vyper(str(version), show_progress=False)
@@ -217,11 +217,13 @@ def find_best_vyper_version(
     Returns: version string
     """
 
+    pragma_specs = [
+        sources.get_vyper_pragma_spec(source, path) for path, source in contract_sources.items()
+    ]
     available_versions, installed_versions = _get_vyper_version_list()
 
-    for path, source in contract_sources.items():
+    for pragma_spec in pragma_specs:
 
-        pragma_spec = sources.get_vyper_pragma_spec(source, path)
         installed_versions = [i for i in installed_versions if i in pragma_spec]
         available_versions = [i for i in available_versions if i in pragma_spec]
 
@@ -327,7 +329,7 @@ def _is_revert_jump(pc_list: PcList, revert_pc: int) -> bool:
 
 
 def _generate_coverage_data(
-    source_map_str: str,
+    source_map_str: str | dict,
     opcodes_str: str,
     contract_name: ContractName,
     ast_json: VyperAstJson,

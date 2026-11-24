@@ -290,7 +290,7 @@ class Console(code.InteractiveConsole):
         try:
             code = self.compile(source, filename, mode)
         except (OverflowError, SyntaxError, ValueError):
-            self.showsyntaxerror(filename)
+            getattr(self, "showsyntaxerror")(filename)
             return False
 
         if code is None:

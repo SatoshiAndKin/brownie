@@ -129,9 +129,9 @@ typedef struct tuple_T2IO {
 } tuple_T2IO;
 #endif
 
-#ifndef MYPYC_DECLARED_tuple_T8OOOOFOOC
-#define MYPYC_DECLARED_tuple_T8OOOOFOOC
-typedef struct tuple_T8OOOOFOOC {
+#ifndef MYPYC_DECLARED_tuple_T8OOOOFOOO
+#define MYPYC_DECLARED_tuple_T8OOOOFOOO
+typedef struct tuple_T8OOOOFOOO {
     PyObject *f0;
     PyObject *f1;
     PyObject *f2;
@@ -139,8 +139,8 @@ typedef struct tuple_T8OOOOFOOC {
     double f4;
     PyObject *f5;
     PyObject *f6;
-    char f7;
-} tuple_T8OOOOFOOC;
+    PyObject *f7;
+} tuple_T8OOOOFOOO;
 #endif
 
 #ifndef MYPYC_DECLARED_tuple_T1I
@@ -883,6 +883,7 @@ typedef struct {
 typedef struct {
     PyObject_HEAD
     CPyVTableItem *vtable;
+    uint32_t bitmap;
     PyObject *_event;
     PyObject *__callbacks_list;
     double _delay;

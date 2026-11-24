@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
-from typing import Final, NewType
+from typing import Any, Final, NewType
 
 from eth_typing import HexStr
 
 from brownie._c_constants import deepcopy
 from brownie.typing import ContractName, IntegerString
 
-CoverageEval = NewType("CoverageEval", dict[ContractName, dict[IntegerString, dict[int, set]]])
+CoverageEval = NewType("CoverageEval", dict[ContractName, dict[IntegerString, list[set[int]]]])
 
 # Coverage evaluation is stored on a per-tx basis. We use a special "coverage hash"
 # with additional inforarmation included to ensure no two transactions will produce
@@ -67,15 +67,27 @@ def clear() -> None:
     _active_module_coverage_hashes.clear()
 
 
-def _add_transaction(coverage_hash: HexStr, coverage_eval: CoverageEval) -> None:
+def _normalize_coverage_eval(coverage_eval: dict[str, Any]) -> CoverageEval:
+    # Restore sets after worker and cache JSON round trips.
+    return CoverageEval(
+        {
+            ContractName(name): {
+                path: [hits if isinstance(hits, set) else set(hits) for hits in groups]
+                for path, groups in paths.items()
+            }
+            for name, paths in coverage_eval.items()
+        }
+    )
+
+
+def _add_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
     # Add coverage data for a transaction and include the hash in the list of active hashes
-    _coverage_eval[coverage_hash] = coverage_eval
+    _coverage_eval[coverage_hash] = _normalize_coverage_eval(coverage_eval)
     _active_module_coverage_hashes.add(coverage_hash)
 
 
-def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: CoverageEval) -> None:
-    # Add a cached transaction
-    _cached_coverage_eval[coverage_hash] = coverage_eval
+def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
+    _cached_coverage_eval[coverage_hash] = _normalize_coverage_eval(coverage_eval)
 
 
 def _check_cached(coverage_hash: HexStr, active: bool = True) -> bool:
