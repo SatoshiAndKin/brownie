@@ -191,7 +191,7 @@ def _get_totals(
     build: Build,
     coverage_eval: CoverageEval,
     exclude_contracts: list[str] | None = None,
-) -> dict[ContractName, dict[str, dict[str, dict[str, Any]]]]:
+) -> dict[ContractName, dict[str, dict[str, Any]]]:
     # Returns a modified coverage eval dict showing counts and totals for each function.
 
     if exclude_contracts is None:

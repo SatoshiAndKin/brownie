@@ -2262,6 +2262,8 @@ extern PyObject *CPyDef_coverage___get_merged_coverage_eval(PyObject *cpy_r_cov_
 extern PyObject *CPyPy_coverage___get_merged_coverage_eval(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_coverage___clear(void);
 extern PyObject *CPyPy_coverage___clear(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
+extern PyObject *CPyDef_coverage____normalize_coverage_eval(PyObject *cpy_r_coverage_eval);
+extern PyObject *CPyPy_coverage____normalize_coverage_eval(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_coverage____add_transaction(PyObject *cpy_r_coverage_hash, PyObject *cpy_r_coverage_eval);
 extern PyObject *CPyPy_coverage____add_transaction(PyObject *self, PyObject *const *args, size_t nargs, PyObject *kwnames);
 extern char CPyDef_coverage____add_cached_transaction(PyObject *cpy_r_coverage_hash, PyObject *cpy_r_coverage_eval);

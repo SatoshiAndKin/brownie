@@ -5,6 +5,7 @@ from importlib.machinery import EXTENSION_SUFFIXES
 from pathlib import Path
 
 import pytest
+import requests
 import solcx
 from packaging.version import Version
 
@@ -80,7 +81,10 @@ def test_report_exclusions_accept_string_or_list(setting):
     ) == ([], ["Token"])
 
 
-def test_json_cached_coverage_produces_report(tmp_path):
+@pytest.mark.parametrize(
+    "add_transaction", [coverage._add_transaction, coverage._add_cached_transaction]
+)
+def test_json_cached_coverage_produces_report(tmp_path, add_transaction):
     source = """# @version 0.4.3
 @external
 @view
@@ -93,26 +97,38 @@ def value(x: uint256) -> uint256:
         {"Vyper_contract.vy": source}, vyper_version="0.4.3"
     )
     cached_build = json.loads(json.dumps(compiled["Vyper_contract"]))
-    sources = project.sources.Sources({"Vyper_contract.vy": source}, {})
-    build = project.build.Build(sources)
+    folder = tmp_path / "project"
+    project.new(folder)
+    (folder / "contracts" / "Vyper_contract.vy").write_text(source)
+    (folder / "brownie-config.yaml").write_text("compiler:\n  vyper:\n    version: '0.4.3'\n")
+    loaded = project.load(folder)
+    build = loaded._build
     build._add_contract(cached_build)
     key = "native-coverage-roundtrip"
     assert key not in coverage.get_coverage_eval()
-    coverage._add_cached_transaction(key, {"Vyper_contract": {"0": [[], [], []]}})
+    add_transaction(key, {"Vyper_contract": {"0": [[], [], []]}})
     try:
         restored = coverage.get_merged_coverage_eval({key: coverage.get_coverage_eval()[key]})
+        assert "Vyper_contract" in "\n".join(output._build_coverage_output(restored))
         result = output._save_coverage_report(build, restored, tmp_path / "coverage.json")
         report = json.loads(result.read_text())
         assert "Vyper_contract" in report["coverage"]
         assert report["highlights"]["statements"]["Vyper_contract"]["0"]
     finally:
+        coverage._coverage_eval.pop(key, None)
         coverage._cached_coverage_eval.pop(key, None)
+        coverage._active_module_coverage_hashes.discard(key)
+        loaded.close()
 
 
 def test_vyper_without_pragma_uses_active_version(monkeypatch):
     def reject_solidity(*args, **kwargs):
         raise solcx.exceptions.SolcError("not Solidity")
 
+    def reject_http(*args, **kwargs):
+        raise AssertionError("compiler fallback must not query a version catalog")
+
+    monkeypatch.setattr(requests, "get", reject_http)
     # Force the language probe to fail at the external compiler boundary.
     monkeypatch.setattr(solcx, "get_solc_version", lambda **kwargs: Version("0.8.39"))
     monkeypatch.setattr(solcx, "set_solc_version", lambda *args, **kwargs: None)

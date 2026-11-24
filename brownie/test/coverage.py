@@ -67,22 +67,27 @@ def clear() -> None:
     _active_module_coverage_hashes.clear()
 
 
-def _add_transaction(coverage_hash: HexStr, coverage_eval: CoverageEval) -> None:
-    # Add coverage data for a transaction and include the hash in the list of active hashes
-    _coverage_eval[coverage_hash] = coverage_eval
-    _active_module_coverage_hashes.add(coverage_hash)
-
-
-def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
-    # JSON stores coverage sets as lists. Restore them at the cache boundary.
-    _cached_coverage_eval[coverage_hash] = CoverageEval(
+def _normalize_coverage_eval(coverage_eval: dict[str, Any]) -> CoverageEval:
+    # Restore sets after worker and cache JSON round trips.
+    return CoverageEval(
         {
             ContractName(name): {
-                path: [set(hits) for hits in groups] for path, groups in paths.items()
+                path: [hits if isinstance(hits, set) else set(hits) for hits in groups]
+                for path, groups in paths.items()
             }
             for name, paths in coverage_eval.items()
         }
     )
+
+
+def _add_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
+    # Add coverage data for a transaction and include the hash in the list of active hashes
+    _coverage_eval[coverage_hash] = _normalize_coverage_eval(coverage_eval)
+    _active_module_coverage_hashes.add(coverage_hash)
+
+
+def _add_cached_transaction(coverage_hash: HexStr, coverage_eval: dict[str, Any]) -> None:
+    _cached_coverage_eval[coverage_hash] = _normalize_coverage_eval(coverage_eval)
 
 
 def _check_cached(coverage_hash: HexStr, active: bool = True) -> bool:
